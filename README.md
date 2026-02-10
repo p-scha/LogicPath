@@ -26,6 +26,8 @@ npm install
 npm run dev
 ```
 
+Enter localhost link (ex. http://localhost:5000/) in your Web Browser to run project.
+
 # Tech Stack
 
   - Frontend: React (Vite), CSS
