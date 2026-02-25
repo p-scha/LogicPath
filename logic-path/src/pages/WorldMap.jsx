@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./WorldMap.css";
+import worldMap from "../assets/world-map.png";
 
 const nodes = [
   { id: "region-1", label: "Module 1", xPercent: 30, yPercent: 40 },
@@ -12,7 +13,7 @@ export default function WorldMap() {
 
   return (
     <div className="map-container">
-      <img src="/world-map.png" alt="World Map" />
+      <img src={worldMap} alt="World Map" />
 
       {nodes.map((node) => (
         <button
