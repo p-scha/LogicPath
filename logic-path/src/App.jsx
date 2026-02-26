@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import StartMenu from "./components/StartMenu.jsx";
-import Navbar from "./components/NavBar.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";

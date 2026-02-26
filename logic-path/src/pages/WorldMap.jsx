@@ -4,9 +4,9 @@ import "./WorldMap.css";
 import worldMap from "../assets/world-map.png";
 
 const nodes = [
-  { id: "region-1", label: "Module 1", description: "Insert description here.", xPercent: 30, yPercent: 40, path: "/module_one" },
-  { id: "region-2", label: "Module 2", description: "Insert description here.", xPercent: 55, yPercent: 25 },
-  { id: "region-3", label: "Module 3", description: "Insert description here.", xPercent: 70, yPercent: 60 },
+  { id: "region-1", label: "Module 1", description: "Pathway to Logic", xPercent: 30, yPercent: 40, path: "/module_one" },
+  { id: "region-2", label: "Module 2", description: "(Under construction)", xPercent: 55, yPercent: 25 },
+  { id: "region-3", label: "Module 3", description: "(Under construction)", xPercent: 70, yPercent: 60 },
 ];
 
 export default function WorldMap() {
