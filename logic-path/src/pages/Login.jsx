@@ -6,7 +6,6 @@ export default function Login() {
 
   return (
     <div>
-      
       <div className="login-container">
         <div className="login-box">
           <h2>Login</h2>
@@ -33,12 +32,13 @@ export default function Login() {
             <a href="#" className="forgot">Forgot Password?</a>
           </div>
 
-        <button className="login-btn" onClick={() => navigate('/map')}>Login</button>
+          <button className="login-btn" onClick={() => navigate('/map')}>Login</button>
 
-        <p className="register-text">
-          Don't have an account? <Link to="/register">Register</Link>
-        </p>
-      </div>
-    </div>
+          <p className="register-text">
+            Don't have an account? <Link to="/register">Register</Link>
+          </p>
+        </div>       
+      </div>         
+    </div>           
   );
 }
