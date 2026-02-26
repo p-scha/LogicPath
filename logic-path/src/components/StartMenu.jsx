@@ -2,7 +2,7 @@ import "./StartMenu.css";
 
 import { useNavigate } from "react-router-dom";
 
-function StartMenu() {
+export default function StartMenu() {
   const navigate = useNavigate();
 
   return (
@@ -18,5 +18,3 @@ function StartMenu() {
   );
 }
 
-
-export default StartMenu;
