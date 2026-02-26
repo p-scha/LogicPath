@@ -6,6 +6,7 @@ import StartMenu from "./components/StartMenu.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import WorldMap from "./pages/WorldMap.jsx"; 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<StartMenu />} />
         <Route path="/login" element={<><Navbar /><Login /></>} />
         <Route path="/register" element={<><Navbar /><Register /></>} />
+        <Route path="/map" element={<WorldMap />} />
       </Routes>
     </Router>
   );
