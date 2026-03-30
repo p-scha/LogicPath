@@ -1,0 +1,360 @@
+.boss-bg {
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(rgba(80, 10, 10, 0.55), rgba(20, 0, 0, 0.7)), url("../assets/mod-one.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── Intro Overlay ── */
+.boss-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  animation: intro-fade 0.4s ease forwards 2.6s;
+  pointer-events: none;
+}
+
+@keyframes intro-fade {
+  to { opacity: 0; }
+}
+
+.boss-intro-gif {
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+/* ── Boss Arena ── */
+.boss-arena {
+  width: 90%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.boss-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(30, 8, 8, 0.8);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  backdrop-filter: blur(4px);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.boss-diff-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* ── Boss Section ── */
+.boss-section {
+  background: rgba(20, 5, 5, 0.92);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem 0;
+  box-shadow: 0 8px 40px rgba(180, 30, 30, 0.35), 0 0 0 1px rgba(239, 68, 68, 0.2);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.boss-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.boss-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fca5a5;
+}
+
+.boss-level {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hp-track {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 0.3rem;
+}
+
+.hp-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.5s ease, background 0.4s;
+}
+
+.hp-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.35);
+  display: block;
+  text-align: right;
+  margin-bottom: 0.5rem;
+}
+
+.boss-sprite-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 200px;
+  overflow: hidden;
+}
+
+.boss-sprite {
+  max-height: 190px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transition: opacity 0.6s, filter 0.5s;
+}
+
+@keyframes dragon-hit {
+  0%   { transform: translateX(0);     filter: brightness(1); }
+  15%  { transform: translateX(-10px); filter: brightness(4) saturate(0); }
+  35%  { transform: translateX(10px);  filter: brightness(4) saturate(0); }
+  55%  { transform: translateX(-6px);  filter: brightness(2.5) hue-rotate(20deg); }
+  75%  { transform: translateX(6px);   filter: brightness(2); }
+  100% { transform: translateX(0);     filter: brightness(1); }
+}
+
+@keyframes player-hurt {
+  0%   { transform: scaleX(1); }
+  25%  { transform: scaleX(0.96); background: rgba(239, 68, 68, 0.35); }
+  50%  { transform: scaleX(1.02); }
+  75%  { transform: scaleX(0.98); }
+  100% { transform: scaleX(1); }
+}
+
+.boss-sprite.hit  { animation: dragon-hit 0.5s ease; }
+.boss-sprite.dead {
+  opacity: 0.2;
+  filter: grayscale(1) brightness(0.4);
+}
+
+/* ── Player HP ── */
+.player-hp-panel {
+  background: rgba(10, 15, 10, 0.8);
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.player-hp-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.player-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.player-hp-text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.player-hp-track {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+
+.player-hp-track.hurt {
+  animation: player-hurt 0.45s ease;
+}
+
+.player-hp-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.5s ease, background 0.4s;
+}
+
+/* ── Battle Log ── */
+.battle-log {
+  background: rgba(15, 15, 30, 0.75);
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.battle-log p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+}
+
+/* ── Question Panel ── */
+.battle-question-panel {
+  background: rgba(15, 15, 30, 0.9);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.battle-question {
+  font-size: 1.05rem;
+  color: #ffffff;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+.battle-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 1.25rem;
+}
+
+.battle-option {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.battle-option:hover  { background: rgba(255, 255, 255, 0.1); }
+.battle-option.chosen { border-color: #2575fc; background: rgba(37, 117, 252, 0.18); color: #fff; }
+.battle-option.correct{ border-color: #22c55e; background: rgba(34, 197, 94, 0.18);  color: #fff; }
+.battle-option.wrong  { border-color: #ef4444; background: rgba(239, 68, 68, 0.18);  color: #fff; }
+
+.option-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.battle-actions { display: flex; justify-content: flex-end; }
+
+.battle-btn {
+  padding: 0.65rem 1.75rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+  letter-spacing: 0.03em;
+}
+
+.battle-btn.confirm          { background: #2575fc; color: #fff; }
+.battle-btn.confirm:disabled { background: rgba(37, 117, 252, 0.28); cursor: not-allowed; }
+.battle-btn.confirm:not(:disabled):hover { background: #1a5ed6; transform: translateY(-1px); }
+.battle-btn.next             { background: #eab308; color: #000; }
+.battle-btn.next:hover       { background: #ca9a04; transform: translateY(-1px); }
+
+/* ── Result Screens ── */
+.boss-result-panel {
+  width: 90%;
+  max-width: 440px;
+  background: rgba(10, 10, 20, 0.94);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.result-dragon {
+  max-height: 130px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  margin-bottom: 1.5rem;
+}
+
+.result-dragon.dead-dragon {
+  opacity: 0.2;
+  filter: grayscale(1);
+}
+
+.result-title {
+  margin: 0 0 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.result-title.victory { color: #22c55e; }
+.result-title.defeat  { color: #ef4444; }
+
+.result-msg {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.result-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+}
+
+.result-btn.done        { background: #22c55e; color: #fff; }
+.result-btn.done:hover  { background: #16a34a; transform: translateY(-1px); }
+.result-btn.retry       { background: #ef4444; color: #fff; }
+.result-btn.retry:hover { background: #dc2626; transform: translateY(-1px); }
+.result-btn.back        { background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255,255,255,0.15); }
+.result-btn.back:hover  { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }

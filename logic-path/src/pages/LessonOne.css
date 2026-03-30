@@ -1,0 +1,106 @@
+.lesson-one-bg {
+  min-height: 100vh;
+  width: 100%;
+  background-image: url("../assets/mod-one.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lesson-one-panel {
+  max-width: 680px;
+  width: 90%;
+  background: rgba(15, 15, 30, 0.88);
+  border-radius: 18px;
+  padding: 2.5rem 2.5rem 2rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+/* Progress dots */
+.slide-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2rem;
+}
+
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.3s;
+}
+
+.progress-dot.done {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.progress-dot.active {
+  background: #2575fc;
+  box-shadow: 0 0 6px #2575fc;
+}
+
+/* Content */
+.slide-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.slide-body {
+  white-space: pre-line;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.97rem;
+  line-height: 1.75;
+  margin: 0 0 2.25rem;
+}
+
+/* Buttons */
+.slide-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.slide-btn {
+  padding: 0.65rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+}
+
+.slide-btn.back {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.slide-btn.back:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.slide-btn.next {
+  background: #2575fc;
+  color: #ffffff;
+}
+
+.slide-btn.next:hover {
+  background: #1a5ed6;
+  transform: translateY(-1px);
+}
+
+.slide-btn.quiz {
+  background: #22c55e;
+  color: #ffffff;
+}
+
+.slide-btn.quiz:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
