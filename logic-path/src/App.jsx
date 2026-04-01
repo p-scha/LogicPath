@@ -7,9 +7,10 @@ import Navbar from "./components/Navbar.jsx";
 
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import WorldMap from "./pages/WorldMap.jsx"; 
+import WorldMap from "./pages/WorldMap.jsx";
 
 import GameNavbar from "./components/GameNavbar.jsx"
+import SocialBar from "./components/SocialBar.jsx"
 import Settings from "./pages/Settings.jsx"
 import LessonOne from "./pages/LessonOne.jsx"
 import LessonOneQuiz from "./pages/LessonOneQuiz.jsx"
@@ -24,21 +25,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   const [count, setCount] = useState(0)
 
-   return (
+  return (
     <Router>
       <Routes>
         <Route path="/" element={<StartMenu />} />
         <Route path="/login" element={<><Navbar /><Login /></>} />
         <Route path="/register" element={<><Navbar /><Register /></>} />
-        <Route path="/map" element={<><GameNavbar /><WorldMap /></>} />
-        <Route path="/settings" element={<><GameNavbar /><Settings /></>} />
-        <Route path="/module_one" element={<><GameNavbar /><ModuleOne_LessonSelect /></>} />
-        <Route path="/module_one/lesson" element={<><GameNavbar /><LessonOne /></>} />
-        <Route path="/module_one/quiz" element={<><GameNavbar /><LessonOneQuiz /></>} />
-        <Route path="/module_one/lesson2" element={<><GameNavbar /><LessonTwo /></>} />
-        <Route path="/module_one/quiz2" element={<><GameNavbar /><LessonTwoQuiz /></>} />
-        <Route path="/module_one/lesson3" element={<><GameNavbar /><LessonThree /></>} />
-        <Route path="/module_one/boss3" element={<><GameNavbar /><LessonThreeBoss /></>} />
+        <Route path="/map" element={<><GameNavbar /><SocialBar /><WorldMap /></>} />
+        <Route path="/settings" element={<><GameNavbar /><SocialBar /><Settings /></>} />
+        <Route path="/module_one" element={<><GameNavbar /><SocialBar /><ModuleOne_LessonSelect /></>} />
+        <Route path="/module_one/lesson" element={<><GameNavbar /><SocialBar /><LessonOne /></>} />
+        <Route path="/module_one/quiz" element={<><GameNavbar /><SocialBar /><LessonOneQuiz /></>} />
+        <Route path="/module_one/lesson2" element={<><GameNavbar /><SocialBar /><LessonTwo /></>} />
+        <Route path="/module_one/quiz2" element={<><GameNavbar /><SocialBar /><LessonTwoQuiz /></>} />
+        <Route path="/module_one/lesson3" element={<><GameNavbar /><SocialBar /><LessonThree /></>} />
+        <Route path="/module_one/boss3" element={<><GameNavbar /><SocialBar /><LessonThreeBoss /></>} />
       </Routes>
     </Router>
   );
