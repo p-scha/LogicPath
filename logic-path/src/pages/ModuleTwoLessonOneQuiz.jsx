@@ -6,103 +6,69 @@ import slimeImg from "../assets/M1L1_Slime.webp";
 const questionBank = {
   1: [
     {
-      question: "What is logic?",
-      options: ["The study of mathematics", "The study of arguments", "The study of language", "The study of science"],
-      answer: 1,
-    },
-    {
-      question: "Which of the following is a statement?",
-      options: ["Close the door!", "Is it raining?", "Snow is white.", "Run!"],
+      question: "What is a fallacy?",
+      options: ["A false statement", "A valid argument", "An error of reasoning", "A contradiction"],
       answer: 2,
     },
     {
-      question: "What is the conclusion of an argument?",
-      options: ["A question", "A command", "Any premise", "The statement intended to be established as true"],
-      answer: 3,
+      question: "Fallacies can be rhetorically effective.",
+      options: ["True", "False"],
+      answer: 0,
+    },
+    {
+      question: "There are only informal fallacies (no formal ones).",
+      options: ["True", "False"],
+      answer: 1,
     },
   ],
   2: [
     {
-      question: "Which sentence is truth-apt?",
-      options: ["Please sit down.", "What time is it?", "The Earth orbits the Sun.", "Don't do that!"],
+      question: "What is a fallacy?",
+      options: ["A false statement", "A valid argument", "An error of reasoning", "A contradiction"],
       answer: 2,
     },
     {
-      question: "Which of the following is an example of a premise?",
-      options: ["Therefore, it will rain.", "The sky is cloudy, so it will rain.", "The sky is cloudy.", "Will it rain?"],
-      answer: 2,
-    },
-    {
-      question: "Argument regimentation involves:",
-      options: [
-        "Making arguments longer",
-        "Translating arguments into formal or premise/conclusion form",
-        "Memorizing arguments",
-        "Ignoring natural language",
-      ],
-      answer: 1,
-    },
-    {
-      question: "Regimenting arguments disambiguates them.",
-      options: [
-        "True",
-        "False",
-      ],
+      question: "Fallacies can be rhetorically effective.",
+      options: ["True", "False"],
       answer: 0,
     },
     {
-      question: "You can only regiment arguments into a formal language.",
+      question: "There are only informal fallacies (no formal ones).",
+      options: ["True", "False"],
+      answer: 1,
+    },
+    {
+      question: "Informal fallacies are errors in the structure of arguments",
       options: [
         "True",
         "False",
       ],
       answer: 1,
+    },
+    {
+      question: "Fallacies may be used purposefully for rhetorical purposes.",
+      options: ["True", "False"],
+      answer: 0,
     },
   ],
   3: [
     {
-      question: "Which best distinguishes a premise from a conclusion?",
-      options: [
-        "Premises are always true, conclusions are always false",
-        "Premises provide support; conclusions are what is supported",
-        "Premises come after conclusions",
-        "There is no distinction",
-      ],
-      answer: 1,
-    },
-    {
-      question: "An argument in natural language can be regimented by:",
-      options: [
-        "Translating into premise/conclusion form only",
-        "Translating into a formal language only",
-        "Both translating into premise/conclusion form and into a formal language",
-        "Neither of the above",
-      ],
+      question: "What is a fallacy?",
+      options: ["A false statement", "A valid argument", "An error of reasoning", "A contradiction"],
       answer: 2,
     },
     {
-      question: "Which of the following is NOT a characteristic of a statement?",
-      options: ["It is declarative", "It can be true or false", "It commands an action", "It is truth-apt"],
-      answer: 2,
-    },
-    {
-      question: "You can only regiment arguments into a formal language.",
-      options: [
-        "True",
-        "False",
-      ],
-      answer: 1,
-    },
-    {
-      question: "Enthymemes are arguments with hidden premises.",
-      options: [
-        "True",
-        "False",
-      ],
+      question: "Fallacies can be rhetorically effective.",
+      options: ["True", "False"],
       answer: 0,
     },
     {
-      question: "All argument forms are valid.",
+      question: "There are only informal fallacies (no formal ones).",
+      options: ["True", "False"],
+      answer: 1,
+    },
+    {
+      question: "Informal fallacies are errors in the structure of arguments",
       options: [
         "True",
         "False",
@@ -110,12 +76,19 @@ const questionBank = {
       answer: 1,
     },
     {
-      question: "English is a formal language.",
-      options: [
-        "True",
-        "False",
-      ],
+      question: "Fallacies may be used purposefully for rhetorical purposes.",
+      options: ["True", "False"],
+      answer: 0,
+    },
+    {
+      question: "Sound arguments can be fallacious.",
+      options: ["True", "False"],
       answer: 1,
+    },
+    {
+      question: "Valid arguments can be fallacious.",
+      options: ["True", "False"],
+      answer: 0,
     },
   ],
 };
@@ -135,7 +108,7 @@ function shuffle(arr) {
   return a;
 }
 
-export default function LessonOneQuiz() {
+export default function ModuleTwoLessonOneQuiz() {
   const location = useLocation();
   const navigate = useNavigate();
   const difficulty = location.state?.difficulty ?? 1;
@@ -208,7 +181,7 @@ export default function LessonOneQuiz() {
           <h2 className="victory-title">Victory!</h2>
           <p className="victory-msg">You defeated the Slime and mastered Lesson 1!</p>
           <div className="victory-actions">
-            <button className="results-btn done" onClick={() => navigate("/module_one")}>
+            <button className="results-btn done" onClick={() => navigate("/module_two")}>
               Back to Lessons
             </button>
           </div>

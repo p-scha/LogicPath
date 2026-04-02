@@ -7,165 +7,161 @@ import emergencyGif from "../assets/Emergency.gif";
 const questionBank = {
   1: [
     {
-      question: "What does 'logical form' refer to?",
+      question: "What is a formal fallacy?",
       options: [
-        "The emotional tone of an argument",
-        "The abstract structure of an argument, independent of content",
-        "The number of premises in an argument",
-        "The language the argument is written in",
+        "An error in probabilistic inference",
+        "An error in the structure of an argument",
+        "A false statement",
+        "A false argument",
       ],
       answer: 1,
     },
     {
-      question: "Which symbol represents 'if P then Q'?",
-      options: ["P ∧ Q", "P ∨ Q", "P → Q", "¬P"],
-      answer: 2,
-    },
-    {
-      question: "An argument is valid when:",
+      question: "Formal fallacies depend on:",
       options: [
-        "All its premises are true",
-        "Its conclusion is true",
-        "True premises guarantee a true conclusion",
-        "It uses formal symbols",
+        "The content of an argument",
+        "The topic of the argument",
+        "The logical structure of the argument",
+        "The speaker's intent",
       ],
       answer: 2,
     },
     {
-      question: "Which symbol represents 'OR'",
-      options: [
-        "∧",
-        "→",
-        "∨",
-        "∴",
-      ],
-      answer: 2,
-    },
-    {
-      question: "Formal logic analyzes the content of arguments insteads of its form.",
-      options: [
-        "True",
-        "False",
-      ],
-      answer: 1,
+      question: "Formal fallacies involve errors in structure, not content.",
+      options: ["True", "False"],
+      answer: 0,
     },
   ],
+
   2: [
     {
-      question: "Which of the following is a conjunction?",
-      options: ["P → Q", "P ∧ Q", "P ∨ Q", "¬P"],
-      answer: 1,
-    },
-    {
-      question: "Which of the following is a disjunction?",
-      options: ["P → Q", "P ∧ Q", "P ∨ Q", "¬P"],
+      question: "Formal fallacies depend on:",
+      options: [
+        "The content of an argument",
+        "The topic of the argument",
+        "The logical structure of the argument",
+        "The speaker's intent",
+      ],
       answer: 2,
     },
     {
-      question: "The negation operator is unary.",
-      options: [
-        "True",
-        "False",
-      ],
+      question: "Formal fallacies involve errors in structure, not content.",
+      options: ["True", "False"],
       answer: 0,
     },
     {
-      question: "Statements can be valid.",
+      question: "Which argument form is invalid?",
       options: [
-        "True",
-        "False",
+        "If A then B, A, therefore B",
+        "If A then B, B, therefore A",
+        "If A then B, not B, therefore not A",
+        "A and B, therefore A",
       ],
       answer: 1,
     },
     {
-      question: "Modus Ponens is the argument form:",
+      question: "What is wrong with this argument: If A then B, B, therefore A?",
       options: [
-        "P → Q, ¬P, ∴ ¬Q",
-        "P → Q, Q, ∴ P",
-        "P → Q, P, ∴ Q",
-        "P ∨ Q, ¬P, ∴ Q",
+        "It is valid",
+        "It assumes the conclusion",
+        "It affirms the consequent",
+        "It denies the antecedent",
       ],
       answer: 2,
     },
     {
-      question: "Two arguments share a logical form if:",
+      question: "What is wrong with this argument: If A then B, not A, therefore not B?",
       options: [
-        "They have the same conclusion",
-        "One can be obtained from the other by substituting terms",
-        "They are both written in English",
-        "They are both valid",
+        "It is valid",
+        "It affirms the consequent",
+        "It denies the antecedent",
+        "It uses a false premise",
       ],
-      answer: 1,
+      answer: 2,
     },
     {
-      question: "All valid arguments are sound.",
+      question: "Formal fallacies guarantee an argument is invalid.",
+      options: ["True", "False"],
+      answer: 0,
+    },
+    {
+      question: "Which of the following is a valid argument form?",
       options: [
-        "True",
-        "False",
+        "If A then B, A, therefore B",
+        "If A then B, B, therefore A",
+        "If A then B, not A, therefore not B",
+        "If A then B, B, therefore not A",
       ],
-      answer: 1,
+      answer: 0,
     },
   ],
-  
+
   3: [
     {
-      question: "Which statement about validity is correct?",
+      question: "Which fallacy is committed here: If A then B, B, therefore A?",
       options: [
-        "A valid argument must have true premises",
-        "A valid argument must have a true conclusion",
-        "A valid argument can have false premises",
-        "Validity depends on the topic of the argument",
+        "Ad Hominem",
+        "Straw Man",
+        "Affirming the Consequent",
+        "Denying the Antecedent",
       ],
       answer: 2,
     },
     {
-      question: "Validity is a property of arguments, not statements.",
+      question: "Which fallacy is committed here: If A then B, not A, therefore not B?",
       options: [
-        "True",
-        "False",
-      ],
-      answer: 0,
-    },
-    {
-      question: "All sound arguments are valid.",
-      options: [
-        "True",
-        "False",
-      ],
-      answer: 0,
-    },
-    {
-      question: "The biconditional operator is unary.",
-      options: [
-        "True",
-        "False",
+        "Affirming the Consequent",
+        "Denying the Antecedent",
+        "False Dilemma",
+        "Appeal to Authority",
       ],
       answer: 1,
     },
     {
-      question: "The negation operator is unary.",
+      question: "Which argument is valid?",
       options: [
-        "True",
-        "False",
+        "If A then B, B, therefore A",
+        "If A then B, A, therefore B",
+        "If A then B, not A, therefore not B",
+        "If A then B, B, therefore not A",
       ],
+      answer: 1,
+    },
+    {
+      question: "Formal fallacies involve errors in structure, not content.",
+      options: ["True", "False"],
       answer: 0,
     },
     {
-      question: "What does the symbol '¬P' mean?",
-      options: ["P and Q", "Not P", "If P then Q", "P or Q"],
+      question: "Fallacious arguments result in a false conclusion.",
+      options: ["True", "False"],
       answer: 1,
     },
     {
-      question: "Which argument form is Modus Tollens?",
+      question: "Formal fallacies always makes an argument:",
       options: [
-        "P → Q, P, ∴ Q",
-        "P → Q, ¬Q, ∴ ¬P",
-        "P ∧ Q, ∴ P",
-        "P ∨ Q, P, ∴ ¬Q",
+        "Sound",
+        "Valid",
+        "Invalid",
+        "Persuasive",
+      ],
+      answer: 2,
+    },
+    {
+      question: "Which fallacy is committed here: 'You want better schools? So you just want to waste money.'?",
+      options: [
+        "Ad Hominem",
+        "Straw Man",
+        "False Dilemma",
+        "Appeal to Authority",
       ],
       answer: 1,
     },
-    
+    {
+      question: "Informal fallacies often appear persuasive.",
+      options: ["True", "False"],
+      answer: 0,
+    },
   ],
 };
 
@@ -184,7 +180,7 @@ function shuffle(arr) {
   return a;
 }
 
-export default function LessonThreeBoss() {
+export default function ModuleTwoLessonThreeBoss() {
   const location = useLocation();
   const navigate = useNavigate();
   const difficulty = location.state?.difficulty ?? 1;
@@ -278,7 +274,7 @@ export default function LessonThreeBoss() {
           <img src={dragonImg} alt="Defeated Dragon" className="result-dragon dead-dragon" />
           <h2 className="result-title victory">Victory!</h2>
           <p className="result-msg">You defeated the Forest Dragon and completed Lesson 3!</p>
-          <button className="result-btn done" onClick={() => navigate("/module_one")}>
+          <button className="result-btn done" onClick={() => navigate("/module_two")}>
             Back to Lessons
           </button>
         </div>
@@ -297,7 +293,7 @@ export default function LessonThreeBoss() {
             <button className="result-btn retry" onClick={handleRetry}>
               Try Again
             </button>
-            <button className="result-btn back" onClick={() => navigate("/module_one")}>
+            <button className="result-btn back" onClick={() => navigate("/module_two")}>
               Back to Lessons
             </button>
           </div>

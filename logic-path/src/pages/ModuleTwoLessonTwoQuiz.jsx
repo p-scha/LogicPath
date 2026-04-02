@@ -6,116 +6,140 @@ import slimeImg from "../assets/M1L1_Slime.webp";
 const questionBank = {
   1: [
     {
-      question: "What is logic?",
-      options: ["The study of mathematics", "The study of arguments", "The study of language", "The study of science"],
+      question: "What is an informal fallacy?",
+      options: [
+        "An error in reasoning based on structure",
+        "An error in reasoning based on content or language",
+        "A valid argument",
+        "A sound argument",
+      ],
       answer: 1,
     },
     {
-      question: "Which of the following is a statement?",
-      options: ["Close the door!", "Is it raining?", "Snow is white.", "Run!"],
+      question: "Which fallacy attacks the person instead of the argument?",
+      options: ["Straw Man", "False Dilemma", "Ad Hominem", "Appeal to Authority"],
       answer: 2,
     },
     {
-      question: "What is the conclusion of an argument?",
-      options: ["A question", "A command", "Any premise", "The statement intended to be established as true"],
-      answer: 3,
+      question: "Informal fallacies often appear persuasive.",
+      options: ["True", "False"],
+      answer: 0,
     },
   ],
+
   2: [
     {
-      question: "Which sentence is truth-apt?",
-      options: ["Please sit down.", "What time is it?", "The Earth orbits the Sun.", "Don't do that!"],
-      answer: 2,
-    },
-    {
-      question: "Which of the following is an example of a premise?",
-      options: ["Therefore, it will rain.", "The sky is cloudy, so it will rain.", "The sky is cloudy.", "Will it rain?"],
-      answer: 2,
-    },
-    {
-      question: "Argument regimentation involves:",
+      question: "Which of the following is an example of an ad hominem fallacy?",
       options: [
-        "Making arguments longer",
-        "Translating arguments into formal or premise/conclusion form",
-        "Memorizing arguments",
-        "Ignoring natural language",
+        "That argument is invalid because it has a false premise.",
+        "You shouldn't believe him because he's not that smart.",
+        "The conclusion does not follow from the premises.",
+        "If you are not vegan, you are an immoral person.",
       ],
       answer: 1,
     },
     {
-      question: "Regimenting arguments disambiguates them.",
+      question: "What does a straw man fallacy do?",
       options: [
-        "True",
-        "False",
+        "Strengthens an argument",
+        "Misrepresents an argument to make it easier to attack",
+        "Uses correct reasoning",
+        "Presents multiple valid options",
       ],
-      answer: 0,
+      answer: 1,
     },
     {
-      question: "You can only regiment arguments into a formal language.",
+      question: "An appeal to authority assumes a claim is true because:",
       options: [
-        "True",
-        "False",
+        "It is logically valid",
+        "Everyone else believes it",
+        "An authority figure supports it",
+        "It is widely believed",
       ],
+      answer: 2,
+    },
+    {
+      question: "A false dilemma presents:",
+      options: [
+        "Many possible choices",
+        "Only two options when more exist",
+        "No options at all",
+        "A contradiction",
+      ],
+      answer: 1,
+    },
+    {
+      question: "Informal fallacies depend on only structure.",
+      options: ["True", "False"],
       answer: 1,
     },
   ],
+
   3: [
     {
-      question: "Which best distinguishes a premise from a conclusion?",
+      question: "Which fallacy is committed here: 'Either you agree with me or you're wrong'?",
       options: [
-        "Premises are always true, conclusions are always false",
-        "Premises provide support; conclusions are what is supported",
-        "Premises come after conclusions",
-        "There is no distinction",
-      ],
-      answer: 1,
-    },
-    {
-      question: "An argument in natural language can be regimented by:",
-      options: [
-        "Translating into premise/conclusion form only",
-        "Translating into a formal language only",
-        "Both translating into premise/conclusion form and into a formal language",
-        "Neither of the above",
+        "Ad Hominem",
+        "Straw Man",
+        "False Dilemma",
+        "Appeal to Authority",
       ],
       answer: 2,
     },
     {
-      question: "Which of the following is NOT a characteristic of a statement?",
-      options: ["It is declarative", "It can be true or false", "It commands an action", "It is truth-apt"],
+      question: "Which fallacy is committed here: 'You can't trust her argument beecause she's failed before'?",
+      options: [
+        "Ad Hominem",
+        "Straw Man",
+        "False Dilemma",
+        "Appeal to Authority",
+      ],
+      answer: 0,
+    },
+    {
+      question: "Which fallacy is committed here: 'A celebrity says this is true, so it must be true'?",
+      options: [
+        "Ad Hominem",
+        "Straw Man",
+        "False Dilemma",
+        "Appeal to Authority",
+      ],
+      answer: 3,
+    },
+    {
+      question: "Which fallacy is committed here: 'You want better schools? So you just want to waste money.'?",
+      options: [
+        "Ad Hominem",
+        "Straw Man",
+        "False Dilemma",
+        "Appeal to Authority",
+      ],
+      answer: 1,
+    },
+    {
+      question: "Informal fallacies often appear persuasive.",
+      options: ["True", "False"],
+      answer: 0,
+    },
+    {
+      question: "An appeal to authority assumes a claim is true because:",
+      options: [
+        "It is logically valid",
+        "Everyone else believes it",
+        "An authority figure supports it",
+        "It is widely believed",
+      ],
       answer: 2,
     },
     {
-      question: "Regimenting arguments disambiguates them.",
+      question: "A false dilemma presents:",
       options: [
-        "True",
-        "False",
-      ],
-      answer: 0,
-    },
-    {
-      question: "You can only regiment arguments into a formal language.",
-      options: [
-        "True",
-        "False",
+        "Many possible choices",
+        "Only two options when more exist",
+        "No options at all",
+        "A contradiction",
       ],
       answer: 1,
-    },
-    {
-      question: "You can only regiment arguments into a formal language.",
-      options: [
-        "True",
-        "False",
-      ],
-      answer: 1,
-    },
-    {
-      question: "Enthymemes are arguments with hidden premises.",
-      options: [
-        "True",
-        "False",
-      ],
-      answer: 0,
     },
   ],
 };
@@ -306,7 +330,7 @@ function Transition({ oldDifficulty, newDifficulty, accuracy, onContinue }) {
 }
 
 // ─── Main Orchestrator ──────────────────────────────────────────────────────
-export default function LessonTwoQuiz() {
+export default function ModuleTwoLessonTwoQuiz() {
   const location = useLocation();
   const navigate  = useNavigate();
   const startDifficulty = location.state?.difficulty ?? 1;
