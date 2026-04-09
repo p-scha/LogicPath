@@ -38,6 +38,6 @@ Enter localhost link (ex. http://localhost:5000/) in your Web Browser to run pro
 
   - p-scha - Paul Schacht - pscha002@odu.edu
   - trentthorne - Trent Thorne - tthor021@odu.edu
-  - cande045 - Caleb Anderson - ...
+  - cande045 - Caleb Anderson - cande045@odu.edu
   - ... - Krishna Paneru - ...
 
