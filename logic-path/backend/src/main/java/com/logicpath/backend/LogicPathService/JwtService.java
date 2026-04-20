@@ -11,6 +11,7 @@ public class JwtService {
 
     private static final String SECRET = "MY_SUPER_SECRET_KEY_123456789";
 
+    @SuppressWarnings("deprecation")
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
@@ -20,6 +21,7 @@ public class JwtService {
                 .compact();
     }
 
+    @SuppressWarnings("deprecation")
     public String extractUsername(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET)
