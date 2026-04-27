@@ -4,22 +4,18 @@
 
 .social-nav {
   background-color: #222121;
-  padding: 8px 10px;
+  padding: 10px;
   position: fixed;
   bottom: 0;
   right: 0;
-  left: auto;
   width: auto;
-  min-width: 180px;
-  max-width: 260px;
   z-index: 9999;
 }
 
 .social-nav ul {
   list-style: none;
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  gap: 15px;
   margin: 0;
   padding: 0;
 }
@@ -36,25 +32,13 @@
   transition: color 0.2s;
 }
 
-.social-btn:hover {
-  color: #4e90c5;
-  border-color: transparent;
-}
-
-.social-btn:focus,
-.social-btn:focus-visible {
-  outline: none;
-}
-
-.social-btn.active {
-  color: #4e90c5;
-}
-
+.social-btn:hover { color: #4e90c5; border-color: transparent; }
+.social-btn:focus, .social-btn:focus-visible { outline: none; }
+.social-btn.active { color: #4e90c5; }
 .social-btn.locked {
   color: rgba(255, 255, 255, 0.28);
   cursor: not-allowed;
 }
-
 .social-btn.locked:hover {
   color: rgba(255, 255, 255, 0.28);
   border-color: transparent;
@@ -62,15 +46,15 @@
 
 
 /* ══════════════════════════════════════════
-   Friends Panel
+   Shared Panel
    ══════════════════════════════════════════ */
 
 .social-panel {
   position: fixed;
-  bottom: 52px; /* sits just above the social-nav bar */
+  bottom: 52px;
   right: 0;
-  width: 290px;
-  max-height: 430px;
+  width: 310px;
+  max-height: 480px;
   background: rgba(12, 12, 26, 0.96);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -86,18 +70,9 @@
 }
 
 @keyframes socialPanelIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
-
-/* ── Panel Header ── */
 
 .panel-header {
   display: flex;
@@ -133,13 +108,17 @@
   border-color: transparent;
 }
 
-.panel-close:focus,
-.panel-close:focus-visible {
-  outline: none;
+.panel-close:focus, .panel-close:focus-visible { outline: none; }
+
+.panel-footer {
+  padding: 0.7rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 
-/* ── Friend List ── */
+/* ══════════════════════════════════════════
+   Friends List
+   ══════════════════════════════════════════ */
 
 .friend-list {
   list-style: none;
@@ -151,10 +130,7 @@
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-.friend-list::-webkit-scrollbar {
-  width: 4px;
-}
-
+.friend-list::-webkit-scrollbar { width: 4px; }
 .friend-list::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
@@ -168,13 +144,7 @@
   transition: background 0.15s;
   cursor: default;
 }
-
-.friend-item:hover {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-
-/* ── Avatar ── */
+.friend-item:hover { background: rgba(255, 255, 255, 0.04); }
 
 .friend-avatar {
   position: relative;
@@ -192,19 +162,15 @@
 
 .online-dot {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
   width: 9px;
   height: 9px;
   border-radius: 50%;
   border: 2px solid rgba(12, 12, 26, 0.96);
 }
-
 .online-dot.online  { background: #22c55e; }
 .online-dot.offline { background: #4b5563; }
-
-
-/* ── Friend Info (name + lesson) ── */
 
 .friend-info {
   flex: 1;
@@ -213,13 +179,11 @@
   gap: 2px;
   min-width: 0;
 }
-
 .friend-name {
   font-size: 0.86rem;
   font-weight: 600;
   color: #ffffff;
 }
-
 .friend-lesson {
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.38);
@@ -228,9 +192,6 @@
   text-overflow: ellipsis;
 }
 
-
-/* ── XP Column ── */
-
 .friend-xp {
   display: flex;
   flex-direction: column;
@@ -238,12 +199,10 @@
   gap: 3px;
   flex-shrink: 0;
 }
-
 .friend-level {
   font-size: 0.7rem;
   font-weight: 700;
 }
-
 .xp-bar {
   width: 44px;
   height: 3px;
@@ -251,25 +210,15 @@
   border-radius: 2px;
   overflow: hidden;
 }
-
 .xp-fill {
   height: 100%;
   border-radius: 2px;
   opacity: 0.85;
 }
-
 .friend-xp-label {
   font-size: 0.62rem;
   color: rgba(255, 255, 255, 0.25);
   letter-spacing: 0.02em;
-}
-
-
-/* ── Panel Footer ── */
-
-.panel-footer {
-  padding: 0.7rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .add-friend-btn {
@@ -286,14 +235,274 @@
   transition: background 0.18s, border-color 0.18s;
   letter-spacing: 0.03em;
 }
-
 .add-friend-btn:hover {
   background: rgba(37, 117, 252, 0.28);
   border-color: rgba(37, 117, 252, 0.6);
   color: #7ab0e8;
 }
+.add-friend-btn:focus, .add-friend-btn:focus-visible { outline: none; }
 
-.add-friend-btn:focus,
-.add-friend-btn:focus-visible {
-  outline: none;
+
+/* ══════════════════════════════════════════
+   Achievements
+   ══════════════════════════════════════════ */
+
+.achievement-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
+.achievement-count {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f59e0b;
+  white-space: nowrap;
+}
+.achievement-total {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 400;
+}
+.achievement-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.achievement-progress-fill {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.achievement-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+.achievement-list::-webkit-scrollbar { width: 4px; }
+.achievement-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 1rem;
+  transition: background 0.15s;
+}
+.achievement-item.earned:hover { background: rgba(255, 255, 255, 0.04); }
+.achievement-item.locked { opacity: 0.4; }
+
+.achievement-icon {
+  font-size: 1.3rem;
+  width: 34px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.achievement-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.achievement-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+.achievement-desc {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.38);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.achievement-badge {
+  font-size: 0.75rem;
+  color: #f59e0b;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+
+/* ══════════════════════════════════════════
+   Guild
+   ══════════════════════════════════════════ */
+
+.guild-header {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.guild-crest {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #7c3aed, #2575fc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+}
+.guild-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+.guild-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+.guild-stats {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
+}
+
+/* Tab toggle */
+.guild-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 0 0.5rem;
+}
+.guild-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 0.6rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.guild-tab:hover { color: rgba(255, 255, 255, 0.7); border-color: transparent; }
+.guild-tab:focus, .guild-tab:focus-visible { outline: none; }
+.guild-tab.active {
+  color: #ffffff;
+  border-bottom-color: #7c3aed;
+}
+
+/* Member list */
+.guild-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+.guild-list::-webkit-scrollbar { width: 4px; }
+.guild-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+.guild-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 1rem;
+  transition: background 0.15s;
+}
+.guild-item:hover { background: rgba(255, 255, 255, 0.04); }
+
+.guild-role {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.guild-role.leader { color: #f59e0b; }
+
+.guild-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.guild-progress-label {
+  font-size: 0.64rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+.guild-progress-bar {
+  width: 60px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.guild-progress-fill {
+  height: 100%;
+  background: #7c3aed;
+  border-radius: 2px;
+}
+
+/* Add member view */
+.guild-add-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  overflow-y: auto;
+  flex: 1;
+}
+.guild-add-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 1rem;
+}
+.guild-add-name {
+  flex: 1;
+  font-size: 0.86rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+.guild-add-btn {
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  border-radius: 6px;
+  color: #a78bfa;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: 0.04em;
+}
+.guild-add-btn:hover {
+  background: rgba(124, 58, 237, 0.3);
+  border-color: rgba(124, 58, 237, 0.6);
+  color: #ffffff;
+}
+.guild-add-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.guild-add-btn:focus, .guild-add-btn:focus-visible { outline: none; }

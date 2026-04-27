@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.css";  // <-- import the CSS
+import "./Navbar.css";
 
 function GameNavbar() {
   return (
@@ -8,6 +8,7 @@ function GameNavbar() {
       <ul>
         <li><Link to="/settings">Settings</Link></li>
         <li><Link to="/map">World Map</Link></li>
+        <li><Link to="/arena">Arena</Link></li>
         <li><Link to="/login">Log Out</Link></li>
       </ul>
     </nav>

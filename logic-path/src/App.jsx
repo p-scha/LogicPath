@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import StartMenu from "./components/StartMenu.jsx";
 import Navbar from "./components/Navbar.jsx";
@@ -19,12 +17,11 @@ import LessonTwoQuiz from "./pages/LessonTwoQuiz.jsx"
 import LessonThree from "./pages/LessonThree.jsx"
 import LessonThreeBoss from "./pages/LessonThreeBoss.jsx"
 import ModuleOne_LessonSelect from "./pages/ModuleOne_LessonSelect.jsx"
+import Arena from "./pages/Arena.jsx"
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <Router>
       <Routes>
@@ -33,6 +30,7 @@ function App() {
         <Route path="/register" element={<><Navbar /><Register /></>} />
         <Route path="/map" element={<><GameNavbar /><SocialBar /><WorldMap /></>} />
         <Route path="/settings" element={<><GameNavbar /><SocialBar /><Settings /></>} />
+        <Route path="/arena" element={<><GameNavbar /><SocialBar /><Arena /></>} />
         <Route path="/module_one" element={<><GameNavbar /><SocialBar /><ModuleOne_LessonSelect /></>} />
         <Route path="/module_one/lesson" element={<><GameNavbar /><SocialBar /><LessonOne /></>} />
         <Route path="/module_one/quiz" element={<><GameNavbar /><SocialBar /><LessonOneQuiz /></>} />
@@ -43,7 +41,6 @@ function App() {
       </Routes>
     </Router>
   );
-
 }
 
 export default App
