@@ -1,11 +1,9 @@
 spring:
-  application:
-    name: backend
-
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://bi55ksgt2wofomyxqwkf-mysql.services.clever-cloud.com:3306/bi55ksgt2wofomyxqwkf?useSSL=true&requireSSL=false&verifyServerCertificate=false
+    username: u3nqeg5puz4uyogy
+    password: paB2OaYaLJQ1tq1yo4qm
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:

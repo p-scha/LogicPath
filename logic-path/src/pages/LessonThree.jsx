@@ -36,7 +36,7 @@ A classic valid form (Modus Ponens):
   P2. P
   C.  ∴ Q
 
-An argument can be valid but have false premises. Validity is about structure, not truth.`,
+An argument can be valid but have false premises. Validity is about structure, not truth. Arguments are sound if they are valid AND their premises are actually true.`,
   },
 ];
 

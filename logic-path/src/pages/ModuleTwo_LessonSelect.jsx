@@ -1,31 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./ModuleOne_LessonSelect.css";
+import "./ModuleTwo_LessonSelect.css";
 
 const lessons = [
   {
     id: 1,
     title: "Lesson 1",
-    subtitle: "What is Logic?",
+    subtitle: "What is a fallacy?",
     difficultyLevel: 1,
-    description: "Explore the foundations of logic -- what arguments are, how statements work, and what it means for something to be true or false.",
-    route: "/module_one/lesson",
+    description: "Learn what are fallacies and the different general types.",
+    route: "/module_two/lesson",
   },
   {
     id: 2,
     title: "Lesson 2",
-    subtitle: "Argument Regimentation",
+    subtitle: "Informal Fallacies",
     difficultyLevel: 1,
-    description: "Learn how to take ordinary language arguments and translate them into clean premise-and-conclusion form.",
-    route: "/module_one/lesson2",
+    description: "An overview of a wide array of common informal fallacies.",
+    route: "/module_two/lesson2",
   },
   {
     id: 3,
     title: "Lesson 3",
-    subtitle: "Logical Form",
+    subtitle: "Formal Fallacies",
     difficultyLevel: 1,
-    description: "Dive into formal logical structure, symbolic notation, and the underlying form that makes arguments valid or invalid.",
-    route: "/module_one/lesson3",
+    description: "An overview of the main formal fallacies",
+    route: "/module_two/lesson3",
   },
 ];
 
@@ -59,8 +59,8 @@ export default function ModuleOne_LessonSelect() {
       <div className="lesson-select-container">
         {/* Left: Lesson List */}
         <div className="lesson-list">
-          <h2 className="module-title">Module 1</h2>
-          <p className="module-subtitle">Pathway to Logic</p>
+          <h2 className="module-title">Module 2</h2>
+          <p className="module-subtitle">Forest of Fallacies</p>
           <ul>
             {lessons.map((lesson) => (
               <li
