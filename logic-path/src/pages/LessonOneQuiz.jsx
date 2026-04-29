@@ -54,8 +54,14 @@ export default function LessonOneQuiz() {
 
         const data = await res.json();
 
-        setQuestions(data.questions);
-        setQueue(shuffle(data.questions));
+        const diffKey = String(difficulty);
+
+        const rawQuestions = data.questions?.[diffKey] ?? [];
+
+        setQuestions(rawQuestions);
+        setQueue(shuffle(rawQuestions));
+        setQIndex(0);
+
       } catch (err) {
         console.error("Lesson load failed:", err);
       } finally {
@@ -64,7 +70,7 @@ export default function LessonOneQuiz() {
     }
 
     loadLesson();
-  }, []);
+  }, [difficulty]);
 
   // =========================
   // LOADING STATE

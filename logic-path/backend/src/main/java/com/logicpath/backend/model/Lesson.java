@@ -1,12 +1,14 @@
 package com.logicpath.backend.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class Lesson {
 
     private String id;
     private String title;
-    private List<Question> questions;
+
+    private Map<String, List<Question>> questions;
 
     public Lesson() {}
 
@@ -26,11 +28,11 @@ public class Lesson {
         this.title = title;
     }
 
-    public List<Question> getQuestions() {
+    public Map<String, List<Question>> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(Map<String, List<Question>> questions) {
         this.questions = questions;
     }
 }

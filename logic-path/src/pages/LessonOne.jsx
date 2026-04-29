@@ -40,7 +40,10 @@ Both methods help us evaluate whether an argument is valid.`,
 export default function LessonOne() {
   const location = useLocation();
   const navigate = useNavigate();
-  const difficulty = location.state?.difficulty ?? 1;
+  const difficulty =
+    location.state?.difficulty ??
+    Number(localStorage.getItem("difficulty")) ??
+    1;
 
   const [index, setIndex] = useState(0);
   const isLast = index === slides.length - 1;
