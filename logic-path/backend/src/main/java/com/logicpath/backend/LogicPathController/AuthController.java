@@ -6,10 +6,7 @@ import com.logicpath.backend.LogicPathService.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,35 +16,41 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
-    JwtService jwtService;
+    private JwtService jwtService;
 
-@PostMapping("/register")
-public ResponseEntity<?> register(@RequestBody User user) {
-    if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-        return ResponseEntity.badRequest().body("Username already exists");
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody User user) {
+
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Email already exists");
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+
+        return ResponseEntity.ok("User registered");
     }
 
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
-    userRepository.save(user);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User loginRequest) {
+        System.out.println("LOGIN REQUEST RECEIVED");
+        System.out.println("Email = " + loginRequest.getEmail());
+        System.out.println("Password = " + loginRequest.getPassword());
 
-    return ResponseEntity.ok("User registered");
-}
+        User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElse(null);
 
-   @PostMapping("/login")
-public ResponseEntity<?> login(@RequestBody User loginRequest) {
+        if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(401).body("Invalid email or password");
+        }
 
-    User user = userRepository.findByUsername(loginRequest.getUsername())
-            .orElse(null);
+        String token = jwtService.generateToken(user.getEmail());
 
-    if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-        return ResponseEntity.status(401).body("Invalid username or password");
-    }
-
-    String token = jwtService.generateToken(user.getUsername());
-
-    return ResponseEntity.ok(Map.of("token", token));
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }
