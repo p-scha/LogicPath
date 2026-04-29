@@ -18,7 +18,7 @@ export default function Register() {
     }
 
     try {
-      await register({ username: email, password });
+      await register({ email, password });
 
       alert("Account created successfully");
       navigate("/login");

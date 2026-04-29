@@ -9,16 +9,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const res = await login({ username: email, password });
-      localStorage.setItem("token", res.data.token);
-      navigate("/map");
-    } catch (err) {
-      console.error("Login failed", err);
-      alert("Invalid email or password");
-    }
-  };
+const handleLogin = async () => {
+  console.log("EMAIL BEFORE REQUEST:", email);
+  console.log("PASSWORD BEFORE REQUEST:", password);
+
+  try {
+    const res = await login({ email, password });
+    localStorage.setItem("token", res.data.token);
+    navigate("/map");
+  } catch (err) {
+    console.error("Login failed", err);
+    alert("Invalid email or password");
+  }
+};
 
   return (
     <div>

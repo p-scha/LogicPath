@@ -9,12 +9,12 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private static final String SECRET = "MY_SUPER_SECRET_KEY_123456789";
+    // 256-bit Base64 encoded key
+    private static final String SECRET = "VGhpcy1pcy1hLXN1cGVyLXNlY3VyZS1sb25nLXNlY3JldC1rZXktZm9yLUhTMjU2LWFuZC1KV1RfMTIzNDU2Nzg5";
 
-    @SuppressWarnings("deprecation")
-    public String generateToken(String username) {
+    public String generateToken(String email) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .signWith(SignatureAlgorithm.HS256, SECRET)
