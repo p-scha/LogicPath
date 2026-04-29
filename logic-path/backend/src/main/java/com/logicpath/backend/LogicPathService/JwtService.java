@@ -21,6 +21,7 @@ public class JwtService {
                 .compact();
     }
 
+    @SuppressWarnings("deprecation")
     public String extractUsername(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET)

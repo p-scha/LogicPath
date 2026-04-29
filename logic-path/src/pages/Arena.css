@@ -1,0 +1,242 @@
+.arena-bg {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arena-container {
+  display: flex;
+  gap: 2rem;
+  width: 90%;
+  max-width: 860px;
+  min-height: 480px;
+}
+
+/* ── Left Panel ── */
+.arena-list {
+  width: 280px;
+  flex-shrink: 0;
+  background: rgba(15, 15, 30, 0.82);
+  border-radius: 16px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+}
+
+.arena-title {
+  margin: 0 0 0.2rem;
+  font-size: 1.3rem;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.arena-subtitle {
+  margin: 0 0 1.25rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.arena-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.arena-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.12s;
+  border: 1px solid transparent;
+}
+
+.arena-item:hover:not(.arena-item--locked) {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateX(3px);
+}
+
+.arena-item--active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.arena-item--locked {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.arena-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.arena-item-week {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.arena-item-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.arena-item-right {
+  flex-shrink: 0;
+}
+
+.arena-lock {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* ── Stars ── */
+.stars {
+  display: flex;
+  gap: 1px;
+}
+
+.star {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.star.filled  { color: #f59e0b; }
+.star.empty   { color: rgba(255, 255, 255, 0.15); }
+
+/* ── Right Detail Panel ── */
+.arena-detail {
+  flex: 1;
+  background: rgba(15, 15, 30, 0.82);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.arena-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.95rem;
+}
+
+.arena-placeholder-icon {
+  font-size: 2.5rem;
+  opacity: 0.4;
+}
+
+.arena-placeholder p {
+  margin: 0;
+}
+
+.arena-detail-header {
+  margin-bottom: 1.25rem;
+}
+
+.arena-detail-week {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.arena-detail-title {
+  margin: 0.25rem 0 0.6rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.arena-detail-difficulty {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.arena-detail-difficulty-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.arena-detail-difficulty .star {
+  font-size: 1rem;
+}
+
+.arena-detail-desc {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0 0 1.5rem;
+}
+
+.arena-reward {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  padding: 0.6rem 0.9rem;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+}
+
+.arena-reward-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.arena-reward-value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #f59e0b;
+}
+
+.arena-start-btn {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7c3aed, #2575fc);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.1s;
+  letter-spacing: 0.04em;
+}
+
+.arena-start-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.arena-start-btn:active {
+  transform: translateY(0);
+}
