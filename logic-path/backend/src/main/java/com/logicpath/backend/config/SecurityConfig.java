@@ -23,7 +23,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ✅ THIS FIXES YOUR ERROR
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

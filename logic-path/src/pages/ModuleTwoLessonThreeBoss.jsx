@@ -4,173 +4,6 @@ import { useState, useEffect } from "react";
 import dragonImg from "../assets/M1L3_ForestDragon.webp";
 import emergencyGif from "../assets/Emergency.gif";
 
-const questionBank = {
-  1: [
-    {
-      question: "What is a formal fallacy?",
-      options: [
-        "An error in probabilistic inference",
-        "An error in the structure of an argument",
-        "A false statement",
-        "A false argument",
-      ],
-      answer: 1,
-    },
-    {
-      question: "Formal fallacies depend on:",
-      options: [
-        "The content of an argument",
-        "The topic of the argument",
-        "The logical structure of the argument",
-        "The speaker's intent",
-      ],
-      answer: 2,
-    },
-    {
-      question: "Formal fallacies involve errors in structure, not content.",
-      options: ["True", "False"],
-      answer: 0,
-    },
-  ],
-
-  2: [
-    {
-      question: "Formal fallacies depend on:",
-      options: [
-        "The content of an argument",
-        "The topic of the argument",
-        "The logical structure of the argument",
-        "The speaker's intent",
-      ],
-      answer: 2,
-    },
-    {
-      question: "Formal fallacies involve errors in structure, not content.",
-      options: ["True", "False"],
-      answer: 0,
-    },
-    {
-      question: "Which argument form is invalid?",
-      options: [
-        "If A then B, A, therefore B",
-        "If A then B, B, therefore A",
-        "If A then B, not B, therefore not A",
-        "A and B, therefore A",
-      ],
-      answer: 1,
-    },
-    {
-      question: "What is wrong with this argument: If A then B, B, therefore A?",
-      options: [
-        "It is valid",
-        "It assumes the conclusion",
-        "It affirms the consequent",
-        "It denies the antecedent",
-      ],
-      answer: 2,
-    },
-    {
-      question: "What is wrong with this argument: If A then B, not A, therefore not B?",
-      options: [
-        "It is valid",
-        "It affirms the consequent",
-        "It denies the antecedent",
-        "It uses a false premise",
-      ],
-      answer: 2,
-    },
-    {
-      question: "Formal fallacies guarantee an argument is invalid.",
-      options: ["True", "False"],
-      answer: 0,
-    },
-    {
-      question: "Which of the following is a valid argument form?",
-      options: [
-        "If A then B, A, therefore B",
-        "If A then B, B, therefore A",
-        "If A then B, not A, therefore not B",
-        "If A then B, B, therefore not A",
-      ],
-      answer: 0,
-    },
-  ],
-
-  3: [
-    {
-      question: "Which fallacy is committed here: If A then B, B, therefore A?",
-      options: [
-        "Ad Hominem",
-        "Straw Man",
-        "Affirming the Consequent",
-        "Denying the Antecedent",
-      ],
-      answer: 2,
-    },
-    {
-      question: "Which fallacy is committed here: If A then B, not A, therefore not B?",
-      options: [
-        "Affirming the Consequent",
-        "Denying the Antecedent",
-        "False Dilemma",
-        "Appeal to Authority",
-      ],
-      answer: 1,
-    },
-    {
-      question: "Which argument is valid?",
-      options: [
-        "If A then B, B, therefore A",
-        "If A then B, A, therefore B",
-        "If A then B, not A, therefore not B",
-        "If A then B, B, therefore not A",
-      ],
-      answer: 1,
-    },
-    {
-      question: "Formal fallacies involve errors in structure, not content.",
-      options: ["True", "False"],
-      answer: 0,
-    },
-    {
-      question: "Fallacious arguments result in a false conclusion.",
-      options: ["True", "False"],
-      answer: 1,
-    },
-    {
-      question: "Formal fallacies always makes an argument:",
-      options: [
-        "Sound",
-        "Valid",
-        "Invalid",
-        "Persuasive",
-      ],
-      answer: 2,
-    },
-    {
-      question: "Which fallacy is committed here: 'You want better schools? So you just want to waste money.'?",
-      options: [
-        "Ad Hominem",
-        "Straw Man",
-        "False Dilemma",
-        "Appeal to Authority",
-      ],
-      answer: 1,
-    },
-    {
-      question: "Informal fallacies often appear persuasive.",
-      options: ["True", "False"],
-      answer: 0,
-    },
-  ],
-};
-
-const difficultyMeta = {
-  1: { label: "Easy",   color: "#22c55e", bossHp: 5, playerHp: 5 },
-  2: { label: "Medium", color: "#eab308", bossHp: 7, playerHp: 4 },
-  3: { label: "Hard",   color: "#ef4444", bossHp: 9, playerHp: 3 },
-};
-
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -180,37 +13,98 @@ function shuffle(arr) {
   return a;
 }
 
-export default function ModuleTwoLessonThreeBoss() {
+const difficultyMeta = {
+  1: { label: "Easy", color: "#22c55e", bossHp: 5, playerHp: 5 },
+  2: { label: "Medium", color: "#eab308", bossHp: 7, playerHp: 4 },
+  3: { label: "Hard", color: "#ef4444", bossHp: 9, playerHp: 3 },
+};
+
+export default function ModuleThreeLessonThreeBoss() {
   const location = useLocation();
   const navigate = useNavigate();
+
   const difficulty = location.state?.difficulty ?? 1;
   const meta = difficultyMeta[difficulty];
-  const baseQuestions = questionBank[difficulty];
 
-  const [queue, setQueue]         = useState(() => shuffle(baseQuestions));
-  const [qIndex, setQIndex]       = useState(0);
-  const [bossHp, setBossHp]       = useState(meta.bossHp);
-  const [playerHp, setPlayerHp]   = useState(meta.playerHp);
-  const [selected, setSelected]   = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [queue, setQueue] = useState([]);
+  const [qIndex, setQIndex] = useState(0);
+
+  const [loading, setLoading] = useState(true);
+
+  const [bossHp, setBossHp] = useState(meta.bossHp);
+  const [playerHp, setPlayerHp] = useState(meta.playerHp);
+
+  const [selected, setSelected] = useState(null);
   const [confirmed, setConfirmed] = useState(false);
+
   const [battleLog, setBattleLog] = useState("The Forest Dragon awakens...");
   const [dragonAnim, setDragonAnim] = useState("");
   const [playerAnim, setPlayerAnim] = useState("");
-  const [phase, setPhase]         = useState("battle"); // "battle" | "victory" | "defeat"
+
+  const [phase, setPhase] = useState("battle");
   const [showIntro, setShowIntro] = useState(true);
 
+  const question = queue[qIndex];
+
+  // Intro animation
   useEffect(() => {
     const timer = setTimeout(() => setShowIntro(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  const question = queue[qIndex];
-  const bossHpPct   = (bossHp / meta.bossHp) * 100;
-  const playerHpPct = (playerHp / meta.playerHp) * 100;
-  const bossHpColor   = bossHpPct > 55 ? "#22c55e" : bossHpPct > 25 ? "#eab308" : "#ef4444";
-  const playerHpColor = playerHpPct > 55 ? "#22c55e" : playerHpPct > 25 ? "#eab308" : "#ef4444";
+  // =========================
+  // LOAD MODULE 3 LESSON 3
+  // =========================
+  useEffect(() => {
+    async function loadLesson() {
+      try {
+        const res = await fetch("/api/lessons/module_3/3");
 
-  const handleSelect = (i) => { if (!confirmed) setSelected(i); };
+        if (!res.ok) {
+          throw new Error("Failed to fetch lesson");
+        }
+
+        const data = await res.json();
+
+        const diffKey = String(difficulty);
+        const rawQuestions = data.questions?.[diffKey] ?? [];
+
+        setQuestions(rawQuestions);
+        setQueue(shuffle(rawQuestions));
+        setQIndex(0);
+      } catch (err) {
+        console.error("Lesson load failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadLesson();
+  }, [difficulty]);
+
+  if (loading || queue.length === 0 || !question) {
+    return (
+      <div className="boss-bg">
+        <div className="battle-log">
+          <p>Loading lesson...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const bossHpPct = (bossHp / meta.bossHp) * 100;
+  const playerHpPct = (playerHp / meta.playerHp) * 100;
+
+  const bossHpColor =
+    bossHpPct > 55 ? "#22c55e" : bossHpPct > 25 ? "#eab308" : "#ef4444";
+
+  const playerHpColor =
+    playerHpPct > 55 ? "#22c55e" : playerHpPct > 25 ? "#eab308" : "#ef4444";
+
+  const handleSelect = (i) => {
+    if (!confirmed) setSelected(i);
+  };
 
   const handleConfirm = () => {
     if (selected === null) return;
@@ -219,6 +113,7 @@ export default function ModuleTwoLessonThreeBoss() {
     if (selected === question.answer) {
       const newBossHp = bossHp - 1;
       setBossHp(newBossHp);
+
       setBattleLog("Direct hit! The dragon recoils!");
       setDragonAnim("hit");
       setTimeout(() => setDragonAnim(""), 500);
@@ -230,6 +125,7 @@ export default function ModuleTwoLessonThreeBoss() {
     } else {
       const newPlayerHp = playerHp - 1;
       setPlayerHp(newPlayerHp);
+
       setBattleLog("Wrong! The dragon breathes fire!");
       setPlayerAnim("hurt");
       setTimeout(() => setPlayerAnim(""), 500);
@@ -243,11 +139,13 @@ export default function ModuleTwoLessonThreeBoss() {
   const handleNext = () => {
     let nextIndex = qIndex + 1;
     let nextQueue = queue;
+
     if (nextIndex >= queue.length) {
-      nextQueue = shuffle(baseQuestions);
+      nextQueue = shuffle(questions);
       nextIndex = 0;
       setQueue(nextQueue);
     }
+
     setQIndex(nextIndex);
     setSelected(null);
     setConfirmed(false);
@@ -257,7 +155,7 @@ export default function ModuleTwoLessonThreeBoss() {
   const handleRetry = () => {
     setBossHp(meta.bossHp);
     setPlayerHp(meta.playerHp);
-    setQueue(shuffle(baseQuestions));
+    setQueue(shuffle(questions));
     setQIndex(0);
     setSelected(null);
     setConfirmed(false);
@@ -267,14 +165,23 @@ export default function ModuleTwoLessonThreeBoss() {
     setPhase("battle");
   };
 
+  // =========================
+  // VICTORY
+  // =========================
   if (phase === "victory") {
     return (
       <div className="boss-bg">
         <div className="boss-result-panel">
-          <img src={dragonImg} alt="Defeated Dragon" className="result-dragon dead-dragon" />
+          <img
+            src={dragonImg}
+            alt="Defeated Dragon"
+            className="result-dragon dead-dragon"
+          />
           <h2 className="result-title victory">Victory!</h2>
-          <p className="result-msg">You defeated the Forest Dragon and completed Lesson 3!</p>
-          <button className="result-btn done" onClick={() => navigate("/module_two")}>
+          <p className="result-msg">
+            You defeated the Forest Dragon and completed Lesson 3!
+          </p>
+          <button className="result-btn done" onClick={() => navigate("/module_three")}>
             Back to Lessons
           </button>
         </div>
@@ -282,18 +189,23 @@ export default function ModuleTwoLessonThreeBoss() {
     );
   }
 
+  // =========================
+  // DEFEAT
+  // =========================
   if (phase === "defeat") {
     return (
       <div className="boss-bg">
         <div className="boss-result-panel">
           <img src={dragonImg} alt="Forest Dragon" className="result-dragon" />
           <h2 className="result-title defeat">Defeated!</h2>
-          <p className="result-msg">The Forest Dragon was too powerful. Study the material and try again!</p>
+          <p className="result-msg">
+            The Forest Dragon was too powerful. Study the material and try again!
+          </p>
           <div className="result-actions">
             <button className="result-btn retry" onClick={handleRetry}>
               Try Again
             </button>
-            <button className="result-btn back" onClick={() => navigate("/module_two")}>
+            <button className="result-btn back" onClick={() => navigate("/module_three")}>
               Back to Lessons
             </button>
           </div>
@@ -302,6 +214,9 @@ export default function ModuleTwoLessonThreeBoss() {
     );
   }
 
+  // =========================
+  // MAIN
+  // =========================
   return (
     <div className="boss-bg">
       {showIntro && (
@@ -312,22 +227,30 @@ export default function ModuleTwoLessonThreeBoss() {
 
       <div className="boss-arena">
 
-        {/* Header badge */}
         <div className="boss-badge">
           <span>Boss Battle</span>
-          <span className="boss-diff-tag" style={{ color: meta.color }}>{meta.label}</span>
+          <span className="boss-diff-tag" style={{ color: meta.color }}>
+            {meta.label}
+          </span>
         </div>
 
-        {/* Boss section */}
         <div className="boss-section">
           <div className="boss-info">
             <span className="boss-name">Forest Dragon</span>
             <span className="boss-level">{meta.label} Boss</span>
           </div>
+
           <div className="hp-track">
-            <div className="hp-fill" style={{ width: `${bossHpPct}%`, background: bossHpColor }} />
+            <div
+              className="hp-fill"
+              style={{ width: `${bossHpPct}%`, background: bossHpColor }}
+            />
           </div>
-          <span className="hp-label">{bossHp} / {meta.bossHp} HP</span>
+
+          <span className="hp-label">
+            {bossHp} / {meta.bossHp} HP
+          </span>
+
           <div className="boss-sprite-wrap">
             <img
               src={dragonImg}
@@ -337,47 +260,68 @@ export default function ModuleTwoLessonThreeBoss() {
           </div>
         </div>
 
-        {/* Player HP */}
         <div className="player-hp-panel">
           <div className="player-hp-info">
             <span className="player-label">Your HP</span>
-            <span className="player-hp-text">{playerHp} / {meta.playerHp}</span>
+            <span className="player-hp-text">
+              {playerHp} / {meta.playerHp}
+            </span>
           </div>
+
           <div className={`player-hp-track ${playerAnim}`}>
-            <div className="player-hp-fill" style={{ width: `${playerHpPct}%`, background: playerHpColor }} />
+            <div
+              className="player-hp-fill"
+              style={{ width: `${playerHpPct}%`, background: playerHpColor }}
+            />
           </div>
         </div>
 
-        {/* Battle log */}
-        <div className="battle-log"><p>{battleLog}</p></div>
+        <div className="battle-log">
+          <p>{battleLog}</p>
+        </div>
 
-        {/* Question */}
         <div className="battle-question-panel">
           <p className="battle-question">{question.question}</p>
+
           <div className="battle-options">
             {question.options.map((opt, i) => {
               let cls = "battle-option";
+
               if (confirmed) {
                 if (i === question.answer) cls += " correct";
                 else if (i === selected) cls += " wrong";
               } else if (i === selected) {
                 cls += " chosen";
               }
+
               return (
-                <button key={i} className={cls} onClick={() => handleSelect(i)}>
-                  <span className="option-letter">{String.fromCharCode(65 + i)}</span>
+                <button
+                  key={i}
+                  className={cls}
+                  onClick={() => handleSelect(i)}
+                >
+                  <span className="option-letter">
+                    {String.fromCharCode(65 + i)}
+                  </span>
                   {opt}
                 </button>
               );
             })}
           </div>
+
           <div className="battle-actions">
             {!confirmed ? (
-              <button className="battle-btn confirm" onClick={handleConfirm} disabled={selected === null}>
+              <button
+                className="battle-btn confirm"
+                onClick={handleConfirm}
+                disabled={selected === null}
+              >
                 Attack!
               </button>
             ) : (
-              <button className="battle-btn next" onClick={handleNext}>Next</button>
+              <button className="battle-btn next" onClick={handleNext}>
+                Next
+              </button>
             )}
           </div>
         </div>

@@ -1,0 +1,102 @@
+{
+  "id": "M2-1",
+  "title": "Fallacies - Lesson 1",
+  "questions": {
+    "1": [
+      {
+        "question": "What is a fallacy?",
+        "options": [
+          "A false statement",
+          "A valid argument",
+          "An error of reasoning",
+          "A contradiction"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Fallacies can be rhetorically effective.",
+        "options": ["True", "False"],
+        "answer": 0
+      },
+      {
+        "question": "There are only informal fallacies (no formal ones).",
+        "options": ["True", "False"],
+        "answer": 1
+      }
+    ],
+    "2": [
+      {
+        "question": "What is a fallacy?",
+        "options": [
+          "A false statement",
+          "A valid argument",
+          "An error of reasoning",
+          "A contradiction"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Fallacies can be rhetorically effective.",
+        "options": ["True", "False"],
+        "answer": 0
+      },
+      {
+        "question": "There are only informal fallacies (no formal ones).",
+        "options": ["True", "False"],
+        "answer": 1
+      },
+      {
+        "question": "Informal fallacies are errors in the structure of arguments",
+        "options": ["True", "False"],
+        "answer": 1
+      },
+      {
+        "question": "Fallacies may be used purposefully for rhetorical purposes.",
+        "options": ["True", "False"],
+        "answer": 0
+      }
+    ],
+    "3": [
+      {
+        "question": "What is a fallacy?",
+        "options": [
+          "A false statement",
+          "A valid argument",
+          "An error of reasoning",
+          "A contradiction"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Fallacies can be rhetorically effective.",
+        "options": ["True", "False"],
+        "answer": 0
+      },
+      {
+        "question": "There are only informal fallacies (no formal ones).",
+        "options": ["True", "False"],
+        "answer": 1
+      },
+      {
+        "question": "Informal fallacies are errors in the structure of arguments",
+        "options": ["True", "False"],
+        "answer": 1
+      },
+      {
+        "question": "Fallacies may be used purposefully for rhetorical purposes.",
+        "options": ["True", "False"],
+        "answer": 0
+      },
+      {
+        "question": "Sound arguments can be fallacious.",
+        "options": ["True", "False"],
+        "answer": 1
+      },
+      {
+        "question": "Valid arguments can be fallacious.",
+        "options": ["True", "False"],
+        "answer": 0
+      }
+    ]
+  }
+}

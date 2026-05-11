@@ -47,13 +47,10 @@ export default function LessonOneQuiz() {
 
   const question = queue[qIndex];
 
-  // =========================
-  // LOAD LESSON FROM BACKEND
-  // =========================
   useEffect(() => {
     async function loadLesson() {
       try {
-        const res = await fetch("/api/lessons/module_1/1");
+        const res = await fetch("/api/lessons/module_1/2");
 
         if (!res.ok) {
           throw new Error("Failed to fetch lesson");
@@ -79,9 +76,6 @@ export default function LessonOneQuiz() {
     loadLesson();
   }, [difficulty]);
 
-  // =========================
-  // LOADING STATE
-  // =========================
   if (loading || queue.length === 0) {
     return (
       <div className="quiz-bg">
@@ -96,9 +90,7 @@ export default function LessonOneQuiz() {
   const hpColor =
     hpPct > 55 ? "#22c55e" : hpPct > 25 ? "#eab308" : "#ef4444";
 
-  // =========================
-  // GAME LOGIC (UNCHANGED)
-  // =========================
+
   const handleSelect = (i) => {
     if (confirmed) return;
     setSelected(i);
