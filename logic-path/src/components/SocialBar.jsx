@@ -33,7 +33,7 @@ const achievements = [
 
 // ── Guild Data ────────────────────────────────────────────────
 const initialGuild = {
-  name: "Logic Vanguard",
+  name: "Cross Guild",
   crest: "🛡️",
   members: [
     { id: 1, name: "Chrono", role: "Leader", lesson: "M1 · Lesson 2", progress: 60 },
