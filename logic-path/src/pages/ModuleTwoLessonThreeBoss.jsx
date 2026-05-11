@@ -23,7 +23,11 @@ export default function ModuleThreeLessonThreeBoss() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const difficulty = location.state?.difficulty ?? 1;
+  const difficulty =
+    location.state?.difficulty ??
+    Number(localStorage.getItem("difficulty")) ??
+    1;
+
   const meta = difficultyMeta[difficulty];
 
   const [questions, setQuestions] = useState([]);
@@ -59,7 +63,7 @@ export default function ModuleThreeLessonThreeBoss() {
   useEffect(() => {
     async function loadLesson() {
       try {
-        const res = await fetch("/api/lessons/module_3/3");
+        const res = await fetch("/api/quizzes/module_2/3");
 
         if (!res.ok) {
           throw new Error("Failed to fetch lesson");
@@ -68,7 +72,11 @@ export default function ModuleThreeLessonThreeBoss() {
         const data = await res.json();
 
         const diffKey = String(difficulty);
-        const rawQuestions = data.questions?.[diffKey] ?? [];
+
+        const rawQuestions =
+          data?.questions?.[diffKey] ??
+          data?.questions?.[Number(diffKey)] ??
+          [];
 
         setQuestions(rawQuestions);
         setQueue(shuffle(rawQuestions));
@@ -83,6 +91,9 @@ export default function ModuleThreeLessonThreeBoss() {
     loadLesson();
   }, [difficulty]);
 
+  // =========================
+  // LOADING
+  // =========================
   if (loading || queue.length === 0 || !question) {
     return (
       <div className="boss-bg">
@@ -165,7 +176,7 @@ export default function ModuleThreeLessonThreeBoss() {
     setPhase("battle");
   };
 
-  // =========================
+// =========================
   // VICTORY
   // =========================
   if (phase === "victory") {
@@ -181,7 +192,7 @@ export default function ModuleThreeLessonThreeBoss() {
           <p className="result-msg">
             You defeated the Forest Dragon and completed Lesson 3!
           </p>
-          <button className="result-btn done" onClick={() => navigate("/module_three")}>
+          <button className="result-btn done" onClick={() => navigate("/module_two")}>
             Back to Lessons
           </button>
         </div>
@@ -205,7 +216,7 @@ export default function ModuleThreeLessonThreeBoss() {
             <button className="result-btn retry" onClick={handleRetry}>
               Try Again
             </button>
-            <button className="result-btn back" onClick={() => navigate("/module_three")}>
+            <button className="result-btn back" onClick={() => navigate("/module_two")}>
               Back to Lessons
             </button>
           </div>
@@ -213,6 +224,7 @@ export default function ModuleThreeLessonThreeBoss() {
       </div>
     );
   }
+
 
   // =========================
   // MAIN

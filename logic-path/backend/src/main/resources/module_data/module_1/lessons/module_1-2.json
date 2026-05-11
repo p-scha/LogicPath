@@ -1,0 +1,18 @@
+{
+  "id": "M1-L2",
+  "title": "Argument Regimentation",
+  "slides": [
+    {
+      "title": "Argument Regimentation",
+      "body": "Many of the arguments we encounter are expressed in natural language — the everyday speech we use in conversation, writing, and media.\n\nNatural language is often ambiguous, vague, or informal. Regimentation is the process of making the logical structure of an argument explicit and clear."
+    },
+    {
+      "title": "Premise / Conclusion Form",
+      "body": "The most common way to regiment an argument is to rewrite it in premise / conclusion form.\n\nEach premise is listed separately and numbered. The conclusion is stated clearly at the end, often introduced by the word 'therefore.'\n\nExample:\n  P1. If it rains, the ground gets wet.\n  P2. It is raining.\n  C. Therefore, the ground is wet."
+    },
+    {
+      "title": "Formal Languages",
+      "body": "A second method of regimentation is translating the argument into a formal language, such as propositional or predicate logic.\n\nFormal languages use symbols to eliminate ambiguity entirely.\n\nExample:\n  P → Q\n  P\n  ∴ Q\n\nThis makes it possible to evaluate validity using strict logical rules."
+    }
+  ]
+}

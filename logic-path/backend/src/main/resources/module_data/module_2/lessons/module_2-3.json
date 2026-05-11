@@ -1,0 +1,22 @@
+{
+  "id": "M2-L3",
+  "title": "Formal Fallacies",
+  "slides": [
+    {
+      "title": "What are Formal Fallacies?",
+      "body": "Formal fallacies are errors in the structure of an argument.\n\nUnlike informal fallacies, they do not depend on content or wording. They depend entirely on logical form.\n\nAny formal fallacy can be generally referred to as a 'non-sequitur'."
+    },
+    {
+      "title": "Form vs Content",
+      "body": "In formal logic, we only care about the structure of an argument, not what it is about (its content).\n\nExample (Modus Ponens):\n  P1. If P, then Q.\n  P2. P.\n  C. Therefore, Q.\n\nThis is a valid argument because the conclusion must be true if the premises are true.\n\nAll invalid arguments are formally fallacious."
+    },
+    {
+      "title": "Affirming the Consequent",
+      "body": "This fallacy has the form:\n\n  If P, then Q.\n  Q.\n  Therefore, P.\n\nExample:\n  If it is raining, the ground is wet.\n  The ground is wet.\n  Therefore, it is raining.\n\nThis is invalid because there could be other reasons the ground is wet.\n\nIn a conditional (If P, then Q), the first proposition is the 'antecedent' while the second proposition is the 'consequent'."
+    },
+    {
+      "title": "Denying the Antecedent",
+      "body": "This fallacy has the form:\n\n  If P, then Q.\n  Not P.\n  Therefore, not Q.\n\nExample:\n  If it is raining, the ground is wet.\n  It is not raining.\n  Therefore, the ground is not wet.\n\nThis is invalid because the ground could be wet for other reasons."
+    }
+  ]
+}

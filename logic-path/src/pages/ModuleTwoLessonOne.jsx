@@ -1,46 +1,47 @@
 import "./LessonOne.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-
-const slides = [
-  {
-    title: "What is a Fallacy?",
-    body: `Fallacies, broadly, are errors in reasoning.
-
-Arguments may contain formal or informal fallacies. 
-
-A fallacy occurs when an argument fails to properly support its conclusion, even if it appears convincing.`,
-  },
-  {
-    title: "Importance of Fallacies",
-    body: `Fallacies can make weak arguments seem strong.
-
-They often appear in everyday conversations, debates, and media. Because of their rhetorical strength, they may be even used purposefully.
-
-Learning to recognize fallacies helps you:
-- Think more clearly
-- Avoid being misled
-- Evaluate arguments more effectively`,
-  },
-  {
-    title: "Types of Fallacies",
-    body: `There are two main types of fallacies:
-
-Formal Fallacies: errors in the structure of an argument.
-
-Informal Fallacies: errors in reasoning based on content, language, or context.
-
-In this module, you will be introduced to both types`,
-  },
-];
+import { useState, useEffect } from "react";
 
 export default function ModuleTwoLessonOne() {
   const location = useLocation();
   const navigate = useNavigate();
-  const difficulty = location.state?.difficulty ?? 1;
 
+  const difficulty =
+    location.state?.difficulty ??
+    Number(localStorage.getItem("difficulty")) ??
+    1;
+
+  const [slides, setSlides] = useState([]);
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
   const isLast = index === slides.length - 1;
+
+  // =========================
+  // LOAD LESSON FROM BACKEND
+  // =========================
+  useEffect(() => {
+    async function loadLesson() {
+      try {
+        const res = await fetch("/api/lessons/module_2/1");
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch lesson");
+        }
+
+        const data = await res.json();
+
+        setSlides(data.slides ?? []);
+        setIndex(0);
+      } catch (err) {
+        console.error("Lesson load failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadLesson();
+  }, []);
 
   const handleNext = () => {
     if (isLast) {
@@ -50,31 +51,59 @@ export default function ModuleTwoLessonOne() {
     }
   };
 
+  if (loading || slides.length === 0) {
+    return (
+      <div className="lesson-one-bg">
+        <div className="lesson-one-panel">
+          <p>Loading lesson...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const slide = slides[index];
+
   return (
     <div className="lesson-one-bg">
       <div className="lesson-one-panel">
+
+        {/* progress dots */}
         <div className="slide-progress">
           {slides.map((_, i) => (
             <span
               key={i}
-              className={`progress-dot ${i === index ? "active" : i < index ? "done" : ""}`}
+              className={`progress-dot ${
+                i === index ? "active" : i < index ? "done" : ""
+              }`}
             />
           ))}
         </div>
 
-        <h2 className="slide-title">{slides[index].title}</h2>
-        <p className="slide-body">{slides[index].body}</p>
+        {/* content */}
+        <h2 className="slide-title">{slide.title}</h2>
+        <p className="slide-body" style={{ whiteSpace: "pre-line" }}>
+          {slide.body}
+        </p>
 
+        {/* controls */}
         <div className="slide-actions">
           {index > 0 && (
-            <button className="slide-btn back" onClick={() => setIndex((i) => i - 1)}>
+            <button
+              className="slide-btn back"
+              onClick={() => setIndex((i) => i - 1)}
+            >
               Back
             </button>
           )}
-          <button className={`slide-btn ${isLast ? "quiz" : "next"}`} onClick={handleNext}>
+
+          <button
+            className={`slide-btn ${isLast ? "quiz" : "next"}`}
+            onClick={handleNext}
+          >
             {isLast ? "Battle!" : "Continue"}
           </button>
         </div>
+
       </div>
     </div>
   );

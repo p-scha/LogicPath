@@ -1,6 +1,6 @@
 import "./LessonTwoQuiz.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import slimeImg from "../assets/M1L1_Slime.webp";
 
 function shuffle(arr) {
@@ -13,23 +13,20 @@ function shuffle(arr) {
 }
 
 const difficultyMeta = {
-  1: { label: "Easy",   color: "#22c55e", maxHp: 3 },
+  1: { label: "Easy", color: "#22c55e", maxHp: 3 },
   2: { label: "Medium", color: "#eab308", maxHp: 5 },
-  3: { label: "Hard",   color: "#ef4444", maxHp: 7 },
+  3: { label: "Hard", color: "#ef4444", maxHp: 7 },
 };
 
-function adjustDifficulty(current, hits, totalAttempts) {
-  const accuracy = hits / totalAttempts;
-  if (accuracy >= 0.8) return Math.min(current + 1, 3);
-  if (accuracy < 0.5)  return Math.max(current - 1, 1);
-  return current;
-}
-
-export default function LessonOneQuiz() {
+export default function LessonTwoQuiz() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const difficulty = location.state?.difficulty ?? 1;
+  const difficulty =
+    location.state?.difficulty ??
+    Number(localStorage.getItem("difficulty")) ??
+    1;
+
   const meta = difficultyMeta[difficulty];
 
   const [questions, setQuestions] = useState([]);
@@ -47,10 +44,13 @@ export default function LessonOneQuiz() {
 
   const question = queue[qIndex];
 
+  // =========================
+  // LOAD QUIZ
+  // =========================
   useEffect(() => {
-    async function loadLesson() {
+    async function loadQuiz() {
       try {
-        const res = await fetch("/api/lessons/module_1/2");
+        const res = await fetch("/api/quizzes/module_1/2");
 
         if (!res.ok) {
           throw new Error("Failed to fetch lesson");
@@ -60,7 +60,13 @@ export default function LessonOneQuiz() {
 
         const diffKey = String(difficulty);
 
-        const rawQuestions = data.questions?.[diffKey] ?? [];
+        console.log("Quiz response:", data);
+        console.log("Difficulty key:", diffKey);
+
+        const rawQuestions =
+          data?.questions?.[diffKey] ??
+          data?.questions?.[Number(diffKey)] ??
+          [];
 
         setQuestions(rawQuestions);
         setQueue(shuffle(rawQuestions));
@@ -73,10 +79,13 @@ export default function LessonOneQuiz() {
       }
     }
 
-    loadLesson();
+    loadQuiz();
   }, [difficulty]);
 
-  if (loading || queue.length === 0) {
+  // =========================
+  // LOADING STATE
+  // =========================
+  if (loading) {
     return (
       <div className="quiz-bg">
         <div className="battle-log">
@@ -90,7 +99,9 @@ export default function LessonOneQuiz() {
   const hpColor =
     hpPct > 55 ? "#22c55e" : hpPct > 25 ? "#eab308" : "#ef4444";
 
-
+  // =========================
+  // GAME LOGIC
+  // =========================
   const handleSelect = (i) => {
     if (confirmed) return;
     setSelected(i);
@@ -159,13 +170,12 @@ export default function LessonOneQuiz() {
   }
 
   // =========================
-  // MAIN RENDER
+  // MAIN UI
   // =========================
   return (
     <div className="quiz-bg">
       <div className="battle-arena">
 
-        {/* Enemy */}
         <div className="enemy-section">
           <div className="enemy-info">
             <span className="enemy-name">Slime</span>
@@ -192,12 +202,10 @@ export default function LessonOneQuiz() {
           </div>
         </div>
 
-        {/* Log */}
         <div className="battle-log">
           <p>{battleLog}</p>
         </div>
 
-        {/* Question */}
         <div className="battle-question-panel">
           <p className="battle-question">{question.question}</p>
 
@@ -248,5 +256,3 @@ export default function LessonOneQuiz() {
     </div>
   );
 }
-
-

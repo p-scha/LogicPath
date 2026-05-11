@@ -1,0 +1,26 @@
+{
+  "id": "M2-L2",
+  "title": "Informal Fallacies",
+  "slides": [
+    {
+      "title": "What are Informal Fallacies?",
+      "body": "Informal fallacies are errors in reasoning that depend on the content, language, or context of an argument.\n\nUnlike formal fallacies, they are not just mistakes in logical structure.\n\nBecause they often appear persuasive in ordinary language, informal fallacies can be harder to detect."
+    },
+    {
+      "title": "Ad Hominem",
+      "body": "An ad hominem fallacy attacks the person making the argument instead of the argument itself.\n\n(Ad hominem means \"to the person\" in Latin).\n\nExample:\n\"Don't listen to her opinion on logic, she failed her last exam.\"\n\nWhether she failed an exam has nothing to do with whether her argument is correct."
+    },
+    {
+      "title": "Straw Man",
+      "body": "A straw man fallacy misrepresents someone's argument, making it easier to attack.\n\nA straw man argument may appear deceptively similar to the actual argument.\n\nOn the other hand, a steel man argument represents someone's argument in its strongest form.\n\nExample:\nPerson A: \"...Thus, we should spend more money on education.\"\nPerson B: \"My opponent wants to waste money on schools.\"\n\nPerson B has distorted the original claim instead of responding to it fairly."
+    },
+    {
+      "title": "Appeal to Authority",
+      "body": "An appeal to authority happens when someone claims an argument is true simply because an authority figure says it is.\n\nExample:\n\"This must be true because a famous actor said so.\"\n\nAuthorities can sometimes be credible sources, but authority alone does not guarantee that a claim is correct."
+    },
+    {
+      "title": "False Dilemma",
+      "body": "A false dilemma presents only two options when more possibilities actually exist.\n\nExample:\n\"Either you support this policy, or you don't care about safety.\"\n\nThis ignores the possibility that someone may care about safety while disagreeing with the policy."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "M1-L3",
+  "title": "Logical Form",
+  "slides": [
+    {
+      "title": "Logical Form",
+      "body": "Every argument has a logical form — an abstract structure that can be separated from its content.\n\nTwo arguments share the same logical form if one can be obtained from the other by substituting different words for the same terms.\n\nExample:\n  All A are B. All B are C. Therefore, all A are C.\n\nThis form is valid regardless of what A, B, and C stand for."
+    },
+    {
+      "title": "Symbolic Notation",
+      "body": "Formal logic uses symbols to represent logical relationships clearly and precisely.\n\nCommon symbols:\n  ¬P   — \"not P\" (negation)\n  P ∧ Q — \"P and Q\" (conjunction)\n  P ∨ Q — \"P or Q\" (disjunction)\n  P → Q — \"if P then Q\" (conditional)\n  P ↔ Q — \"P if and only if Q\" (biconditional)\n\nUsing symbols removes ambiguity that natural language introduces."
+    },
+    {
+      "title": "Validity and Form",
+      "body": "An argument is valid if its logical form guarantees that a true conclusion follows from true premises — regardless of the actual content.\n\nA classic valid form (Modus Ponens):\n  P1. P → Q\n  P2. P\n  C. ∴ Q\n\nAn argument can be valid but have false premises. Validity is about structure, not truth. Arguments are sound if they are valid AND their premises are actually true."
+    }
+  ]
+}

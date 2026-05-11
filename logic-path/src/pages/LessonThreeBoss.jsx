@@ -23,7 +23,11 @@ export default function LessonThreeBoss() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const difficulty = location.state?.difficulty ?? 1;
+  const difficulty =
+    location.state?.difficulty ??
+    Number(localStorage.getItem("difficulty")) ??
+    1;
+
   const meta = difficultyMeta[difficulty];
 
   const [questions, setQuestions] = useState([]);
@@ -42,29 +46,34 @@ export default function LessonThreeBoss() {
   const [dragonAnim, setDragonAnim] = useState("");
   const [playerAnim, setPlayerAnim] = useState("");
 
-  const [phase, setPhase] = useState("battle"); // battle | victory | defeat
+  const [phase, setPhase] = useState("battle");
   const [showIntro, setShowIntro] = useState(true);
 
   const question = queue[qIndex];
 
-  // Intro animation timeout
+  // Intro animation
   useEffect(() => {
     const t = setTimeout(() => setShowIntro(false), 1800);
     return () => clearTimeout(t);
   }, []);
 
-  // Load lesson
+  // =========================
+  // LOAD QUIZ (FIXED API)
+  // =========================
   useEffect(() => {
-    async function loadLesson() {
+    async function loadQuiz() {
       try {
-        const res = await fetch("/api/lessons/module_1/3");
+        const res = await fetch("/api/quizzes/module_1/3");
 
         if (!res.ok) throw new Error("Failed to fetch lesson");
 
         const data = await res.json();
         const diffKey = String(difficulty);
 
-        const rawQuestions = data.questions?.[diffKey] ?? [];
+        const rawQuestions =
+          data?.questions?.[diffKey] ??
+          data?.questions?.[Number(diffKey)] ??
+          [];
 
         setQuestions(rawQuestions);
         setQueue(shuffle(rawQuestions));
@@ -76,9 +85,12 @@ export default function LessonThreeBoss() {
       }
     }
 
-    loadLesson();
+    loadQuiz();
   }, [difficulty]);
 
+  // =========================
+  // LOADING STATE
+  // =========================
   if (loading || queue.length === 0 || !question) {
     return (
       <div className="quiz-bg">
@@ -126,7 +138,7 @@ export default function LessonThreeBoss() {
       setBattleLog("Wrong! The dragon breathes fire!");
       setPlayerAnim("hurt");
       setTimeout(() => setPlayerAnim(""), 500);
-
+ 
       if (newPlayerHp <= 0) {
         setTimeout(() => setPhase("defeat"), 900);
       }
@@ -162,47 +174,38 @@ export default function LessonThreeBoss() {
     setPhase("battle");
   };
 
-  // =========================
-  // VICTORY SCREEN
+// =========================
+  // VICTORY
   // =========================
   if (phase === "victory") {
     return (
-      <div className="quiz-bg">
-        <div className="victory-panel">
+      <div className="boss-bg">
+        <div className="boss-result-panel">
           <img
             src={dragonImg}
             alt="Defeated Dragon"
-            className="victory-slime"
+            className="result-dragon dead-dragon"
           />
-          <h2 className="victory-title">Victory!</h2>
-          <p className="victory-msg">
-            You defeated the Forest Dragon and completed Module 1!
+          <h2 className="result-title victory">Victory!</h2>
+          <p className="result-msg">
+            You defeated the Forest Dragon and completed Lesson 3!
           </p>
-          <div className="victory-actions">
-            <button
-              className="results-btn done"
-              onClick={() => navigate("/module_one")}
-            >
-              Back to Lessons
-            </button>
-          </div>
+          <button className="result-btn done" onClick={() => navigate("/module_one")}>
+            Back to Lessons
+          </button>
         </div>
       </div>
     );
   }
 
   // =========================
-  // DEFEAT SCREEN
+  // DEFEAT
   // =========================
   if (phase === "defeat") {
     return (
       <div className="boss-bg">
         <div className="boss-result-panel">
-          <img
-            src={dragonImg}
-            alt="Forest Dragon"
-            className="result-dragon"
-          />
+          <img src={dragonImg} alt="Forest Dragon" className="result-dragon" />
           <h2 className="result-title defeat">Defeated!</h2>
           <p className="result-msg">
             The Forest Dragon was too powerful. Study the material and try again!
@@ -211,10 +214,7 @@ export default function LessonThreeBoss() {
             <button className="result-btn retry" onClick={handleRetry}>
               Try Again
             </button>
-            <button
-              className="result-btn back"
-              onClick={() => navigate("/module_one")}
-            >
+            <button className="result-btn back" onClick={() => navigate("/module_one")}>
               Back to Lessons
             </button>
           </div>

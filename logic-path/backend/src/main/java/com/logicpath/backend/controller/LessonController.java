@@ -4,9 +4,6 @@ import com.logicpath.backend.model.Lesson;
 import com.logicpath.backend.service.LessonService;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,39 +17,38 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    /**
-     * GET /api/lessons/{module}/{lesson}
-     * Example: /api/lessons/module_1/1
-     * @param module module name, e.g., "module_1"
-     * @param lesson lesson number, e.g., "1"
-     * @return Lesson object containing questions
-     */
     @GetMapping("/{module}/{lesson}")
     public Lesson getLesson(@PathVariable String module,
                             @PathVariable String lesson) {
         return lessonService.getLesson(module, lesson);
     }
 
-    /**
-     * Optional: list all lessons in a module
-     * GET /api/lessons/{module}
-     * Example: /api/lessons/module_1
-     */
     @GetMapping("/{module}")
     public List<String> listLessons(@PathVariable String module) {
         try {
-            URL url = getClass().getClassLoader().getResource("module_data");
+            var url = getClass().getClassLoader().getResource("module_data");
             if (url == null) return Collections.emptyList();
 
-            File[] files = new File(url.getFile()).listFiles((dir, name) -> name.startsWith(module + "-"));
+            var dir = new java.io.File(url.getFile());
+            var files = dir.listFiles((d, name) ->
+                    name.startsWith(module + "-") || name.startsWith("lesson_")
+            );
+
             if (files == null) return Collections.emptyList();
 
-            List<String> lessons = new ArrayList<>();
-            for (File file : files) {
-                // Extract "1" from module_1-1.json
-                String lessonName = file.getName().replace(".json", "").split("-")[1];
-                lessons.add(lessonName);
+            List<String> lessons = new java.util.ArrayList<>();
+
+            for (java.io.File file : files) {
+                String name = file.getName().replace(".json", "");
+
+                // supports lesson_1.json OR module_1-1.json
+                if (name.contains("-")) {
+                    lessons.add(name.split("-")[1]);
+                } else if (name.startsWith("lesson_")) {
+                    lessons.add(name.replace("lesson_", ""));
+                }
             }
+
             return lessons;
 
         } catch (Exception e) {

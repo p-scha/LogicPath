@@ -22,7 +22,10 @@ export default function LessonOneQuiz() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const difficulty = location.state?.difficulty ?? 1;
+  const difficulty =
+    location.state?.difficulty ??
+    Number(localStorage.getItem("difficulty")) ??
+    1;
   const meta = difficultyMeta[difficulty];
 
   const [questions, setQuestions] = useState([]);
@@ -44,38 +47,44 @@ export default function LessonOneQuiz() {
   // LOAD LESSON FROM BACKEND
   // =========================
   useEffect(() => {
-    async function loadLesson() {
+    async function loadQuiz() {
       try {
-        const res = await fetch("/api/lessons/module_1/1");
+        const res = await fetch("/api/quizzes/module_1/1");
 
         if (!res.ok) {
-          throw new Error("Failed to fetch lesson");
+          throw new Error("Failed to fetch quiz");
         }
 
         const data = await res.json();
 
         const diffKey = String(difficulty);
 
-        const rawQuestions = data.questions?.[diffKey] ?? [];
+        console.log("Quiz response:", data);
+        console.log("Difficulty key:", diffKey);
+
+        const rawQuestions =
+          data?.questions?.[diffKey] ||
+          data?.questions?.[Number(diffKey)] ||
+          [];
 
         setQuestions(rawQuestions);
         setQueue(shuffle(rawQuestions));
         setQIndex(0);
 
       } catch (err) {
-        console.error("Lesson load failed:", err);
+        console.error("Quiz load failed:", err);
       } finally {
         setLoading(false);
       }
     }
 
-    loadLesson();
+    loadQuiz();
   }, [difficulty]);
 
   // =========================
   // LOADING STATE
   // =========================
-  if (loading || queue.length === 0) {
+  if (loading) {
     return (
       <div className="quiz-bg">
         <div className="battle-log">

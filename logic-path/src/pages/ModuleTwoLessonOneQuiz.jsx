@@ -47,7 +47,7 @@ export default function ModuleTwoLessonOneQuiz() {
   useEffect(() => {
     async function loadLesson() {
       try {
-        const res = await fetch("/api/lessons/module_2/1");
+        const res = await fetch("/api/quizzes/module_2/1");
 
         if (!res.ok) {
           throw new Error("Failed to fetch lesson");
@@ -56,7 +56,11 @@ export default function ModuleTwoLessonOneQuiz() {
         const data = await res.json();
 
         const diffKey = String(difficulty);
-        const rawQuestions = data.questions?.[diffKey] ?? [];
+
+        const rawQuestions =
+          data?.questions?.[diffKey] ??
+          data?.questions?.[Number(diffKey)] ??
+          [];
 
         setQuestions(rawQuestions);
         setQueue(shuffle(rawQuestions));
@@ -71,6 +75,9 @@ export default function ModuleTwoLessonOneQuiz() {
     loadLesson();
   }, [difficulty]);
 
+  // =========================
+  // LOADING
+  // =========================
   if (loading || queue.length === 0 || !question) {
     return (
       <div className="quiz-bg">
@@ -163,7 +170,6 @@ export default function ModuleTwoLessonOneQuiz() {
     <div className="quiz-bg">
       <div className="battle-arena">
 
-        {/* Enemy */}
         <div className="enemy-section">
           <div className="enemy-info">
             <span className="enemy-name">Slime</span>
@@ -190,12 +196,10 @@ export default function ModuleTwoLessonOneQuiz() {
           </div>
         </div>
 
-        {/* Log */}
         <div className="battle-log">
           <p>{battleLog}</p>
         </div>
 
-        {/* Question */}
         <div className="battle-question-panel">
           <p className="battle-question">{question.question}</p>
 

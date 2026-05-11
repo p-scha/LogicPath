@@ -1,0 +1,18 @@
+{
+  "id": "M1-L1",
+  "title": "What is Logic?",
+  "slides": [
+    {
+      "title": "What is Logic?",
+      "body": "Logic is the study of arguments.\n\nAn argument is a sequence of statements made up of premises and a conclusion.\n\nStatements are declarative sentences that are truth-apt — meaning they can be either true or false. Commands, questions, and exclamations are not statements."
+    },
+    {
+      "title": "Arguments & Statements",
+      "body": "Every argument has two key parts:\n\nPremises — statements intended to establish or justify a conclusion.\n\nConclusion — the statement the premises are meant to support or prove true.\n\nExample:\n  P1. All humans are mortal.\n  P2. Socrates is a human.\n  C.  Therefore, Socrates is mortal."
+    },
+    {
+      "title": "Argument Regimentation",
+      "body": "Many arguments we encounter are written in natural language — everyday speech like English or Spanish.\n\nRegimentation is the process of clarifying and restructuring these arguments so their logical form is clear. This can be done in two ways:\n\n1) Translating the argument into explicit premise / conclusion form.\n2) Translating the argument into a formal symbolic language.\n\nBoth methods help us evaluate whether an argument is valid."
+    }
+  ]
+}
