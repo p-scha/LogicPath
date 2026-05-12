@@ -1,4 +1,4 @@
-package com.logicpath.backend.LogicPathReposatory;
+package com.logicpath.backend.LogicPathRepository;
 
 import com.logicpath.backend.LogicPathModel.User;
 import org.springframework.data.jpa.repository.JpaRepository;
