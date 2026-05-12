@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.logicpath.backend.LogicPathModel.User;
-import com.logicpath.backend.LogicPathReposatory.UserRepository;
+import com.logicpath.backend.LogicPathRepository.UserRepository;
 import com.logicpath.backend.LogicPathService.JwtService;
 
 @RestController
@@ -52,6 +52,10 @@ public class AuthController {
 
         String token = jwtService.generateToken(user.getEmail());
 
-        return ResponseEntity.ok(Map.of("token", token));
+        return ResponseEntity.ok(Map.of(
+        "token", token,
+        "id", user.getId(),
+        "email", user.getEmail()
+        ));
     }
 }
