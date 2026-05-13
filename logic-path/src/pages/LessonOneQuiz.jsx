@@ -3,6 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import slimeImg from "../assets/M1L1_Slime.webp";
 
+// For progression API helper
+import { markStageComplete } from "../services/ProgressService";
+import { useStageAccess } from "../hooks/useStageAccess";
+
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -22,10 +26,22 @@ export default function LessonOneQuiz() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // For logged-in user data
+  const userId = localStorage.getItem("userId");
+
+  // Access restriction w/ hook
+  const { accessChecked, allowed } = useStageAccess(
+    userId,
+    "module_1",
+    "encounter_1",
+    "/module_one"
+  );
+
   const difficulty =
     location.state?.difficulty ??
     Number(localStorage.getItem("difficulty")) ??
     1;
+
   const meta = difficultyMeta[difficulty];
 
   const [questions, setQuestions] = useState([]);
@@ -44,9 +60,12 @@ export default function LessonOneQuiz() {
   const question = queue[qIndex];
 
   // =========================
-  // LOAD LESSON FROM BACKEND
+  // LOAD QUIZ FROM BACKEND
   // =========================
   useEffect(() => {
+    // No loading if access not allowed
+    if (!allowed) return;
+
     async function loadQuiz() {
       try {
         const res = await fetch("/api/quizzes/module_1/1");
@@ -70,7 +89,6 @@ export default function LessonOneQuiz() {
         setQuestions(rawQuestions);
         setQueue(shuffle(rawQuestions));
         setQIndex(0);
-
       } catch (err) {
         console.error("Quiz load failed:", err);
       } finally {
@@ -79,16 +97,30 @@ export default function LessonOneQuiz() {
     }
 
     loadQuiz();
-  }, [difficulty]);
+  }, [allowed, difficulty]);
 
   // =========================
-  // LOADING STATE
+  // ACCESS / LOADING STATE
   // =========================
-  if (loading) {
+  if (!accessChecked) {
     return (
       <div className="quiz-bg">
         <div className="battle-log">
-          <p>Loading lesson...</p>
+          <p>Loading battle...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!allowed) {
+    return null;
+  }
+
+  if (loading || !question) {
+    return (
+      <div className="quiz-bg">
+        <div className="battle-log">
+          <p>Loading battle...</p>
         </div>
       </div>
     );
@@ -99,7 +131,7 @@ export default function LessonOneQuiz() {
     hpPct > 55 ? "#22c55e" : hpPct > 25 ? "#eab308" : "#ef4444";
 
   // =========================
-  // GAME LOGIC (UNCHANGED)
+  // GAME LOGIC
   // =========================
   const handleSelect = (i) => {
     if (confirmed) return;
@@ -153,12 +185,26 @@ export default function LessonOneQuiz() {
           <img src={slimeImg} alt="Defeated Slime" className="victory-slime" />
           <h2 className="victory-title">Victory!</h2>
           <p className="victory-msg">
-            You defeated the Slime and completed the lesson!
+            You defeated the Slime and completed the encounter!
           </p>
           <div className="victory-actions">
             <button
               className="results-btn done"
-              onClick={() => navigate("/module_one")}
+              onClick={async () => {
+                try {
+                  await markStageComplete(
+                    userId,
+                    "module_1",
+                    "encounter_1",
+                    "ENCOUNTER"
+                  );
+
+                  navigate("/module_one");
+                } catch (err) {
+                  console.error("Failed to save encounter progress:", err);
+                  alert("Could not save progress. Please try again.");
+                }
+              }}
             >
               Back to Lessons
             </button>

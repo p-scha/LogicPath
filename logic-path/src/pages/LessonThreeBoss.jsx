@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import dragonImg from "../assets/M1L3_ForestDragon.webp";
 import emergencyGif from "../assets/Emergency.gif";
 
+// For progression API helper
+import { markStageComplete } from "../services/ProgressService";
+import { useStageAccess } from "../hooks/useStageAccess";
+
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -22,6 +26,17 @@ const difficultyMeta = {
 export default function LessonThreeBoss() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // For logged-in user data
+  const userId = localStorage.getItem("userId");
+
+  // Access restriction w/ hook
+  const { accessChecked, allowed } = useStageAccess(
+    userId,
+    "module_1",
+    "boss_1",
+    "/module_one"
+  );
 
   const difficulty =
     location.state?.difficulty ??
@@ -58,14 +73,19 @@ export default function LessonThreeBoss() {
   }, []);
 
   // =========================
-  // LOAD QUIZ (FIXED API)
+  // LOAD QUIZ
   // =========================
   useEffect(() => {
+    // No loading if access not allowed
+    if (!allowed) return;
+
     async function loadQuiz() {
       try {
         const res = await fetch("/api/quizzes/module_1/3");
 
-        if (!res.ok) throw new Error("Failed to fetch lesson");
+        if (!res.ok) {
+          throw new Error("Failed to fetch quiz");
+        }
 
         const data = await res.json();
         const diffKey = String(difficulty);
@@ -79,23 +99,37 @@ export default function LessonThreeBoss() {
         setQueue(shuffle(rawQuestions));
         setQIndex(0);
       } catch (err) {
-        console.error("Lesson load failed:", err);
+        console.error("Quiz load failed:", err);
       } finally {
         setLoading(false);
       }
     }
 
     loadQuiz();
-  }, [difficulty]);
+  }, [allowed, difficulty]);
 
   // =========================
-  // LOADING STATE
+  // ACCESS / LOADING STATE
   // =========================
+  if (!accessChecked) {
+    return (
+      <div className="boss-bg">
+        <div className="battle-log">
+          <p>Loading boss...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!allowed) {
+    return null;
+  }
+
   if (loading || queue.length === 0 || !question) {
     return (
-      <div className="quiz-bg">
+      <div className="boss-bg">
         <div className="battle-log">
-          <p>Loading lesson...</p>
+          <p>Loading boss...</p>
         </div>
       </div>
     );
@@ -138,7 +172,7 @@ export default function LessonThreeBoss() {
       setBattleLog("Wrong! The dragon breathes fire!");
       setPlayerAnim("hurt");
       setTimeout(() => setPlayerAnim(""), 500);
- 
+
       if (newPlayerHp <= 0) {
         setTimeout(() => setPhase("defeat"), 900);
       }
@@ -174,7 +208,7 @@ export default function LessonThreeBoss() {
     setPhase("battle");
   };
 
-// =========================
+  // =========================
   // VICTORY
   // =========================
   if (phase === "victory") {
@@ -188,10 +222,26 @@ export default function LessonThreeBoss() {
           />
           <h2 className="result-title victory">Victory!</h2>
           <p className="result-msg">
-            You defeated the Forest Dragon and completed Lesson 3!
+            You defeated the Forest Dragon and completed Module 1!
           </p>
-          <button className="result-btn done" onClick={() => navigate("/module_one")}>
-            Back to Lessons
+          <button
+            className="result-btn done"
+            onClick={async () => {
+              try {
+                await markStageComplete(userId, "module_1", "boss_1", "BOSS");
+
+                navigate("/map", {
+                  state: {
+                    unlockedMessage: "Module 2 has been unlocked!",
+                  },
+                });
+              } catch (err) {
+                console.error("Failed to save boss progress:", err);
+                alert("Could not save progress. Please try again.");
+              }
+            }}
+          >
+            Back to Map
           </button>
         </div>
       </div>
@@ -214,7 +264,10 @@ export default function LessonThreeBoss() {
             <button className="result-btn retry" onClick={handleRetry}>
               Try Again
             </button>
-            <button className="result-btn back" onClick={() => navigate("/module_one")}>
+            <button
+              className="result-btn back"
+              onClick={() => navigate("/module_one")}
+            >
               Back to Lessons
             </button>
           </div>

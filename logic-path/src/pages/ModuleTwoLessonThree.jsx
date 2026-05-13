@@ -2,9 +2,24 @@ import "./LessonOne.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+// For progression API helper
+import { markStageComplete } from "../services/ProgressService";
+import { useStageAccess } from "../hooks/useStageAccess";
+
 export default function ModuleTwoLessonThree() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // For logged-in user data
+  const userId = localStorage.getItem("userId");
+
+  // Access restriction w/ hook
+  const { accessChecked, allowed } = useStageAccess(
+    userId,
+    "module_2",
+    "lesson_3",
+    "/module_two"
+  );
 
   const difficulty =
     location.state?.difficulty ??
@@ -21,6 +36,9 @@ export default function ModuleTwoLessonThree() {
   // LOAD LESSON FROM BACKEND
   // =========================
   useEffect(() => {
+    // No loading if accessed not allowed
+    if (!allowed) return;
+
     async function loadLesson() {
       try {
         const res = await fetch("/api/lessons/module_2/3");
@@ -41,15 +59,33 @@ export default function ModuleTwoLessonThree() {
     }
 
     loadLesson();
-  }, []);
+  }, [allowed]);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (isLast) {
-      navigate("/module_two/boss3", { state: { difficulty } });
+      try {
+        await markStageComplete(userId, "module_2", "lesson_3", "LESSON");
+
+        navigate("/module_two/boss3", { state: { difficulty } });
+      } catch (err) {
+        console.error("Failed to save lesson progress:", err);
+        alert("Could not save progress. Please try again.");
+      }
     } else {
       setIndex((i) => i + 1);
     }
   };
+
+  // For ensuring that lessons aren't show if access is not allowed
+  if (!accessChecked || !allowed) {
+    return (
+      <div className="lesson-one-bg">
+        <div className="lesson-one-panel">
+          <p>Loading lesson...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading || slides.length === 0) {
     return (
@@ -66,7 +102,6 @@ export default function ModuleTwoLessonThree() {
   return (
     <div className="lesson-one-bg">
       <div className="lesson-one-panel">
-
         {/* progress dots */}
         <div className="slide-progress">
           {slides.map((_, i) => (
@@ -103,7 +138,6 @@ export default function ModuleTwoLessonThree() {
             {isLast ? "Boss Battle!" : "Continue"}
           </button>
         </div>
-
       </div>
     </div>
   );

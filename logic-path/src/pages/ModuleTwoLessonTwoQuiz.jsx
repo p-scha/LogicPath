@@ -3,12 +3,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import slimeImg from "../assets/M1L1_Slime.webp";
 
+// For progression API helper
+import { markStageComplete } from "../services/ProgressService";
+import { useStageAccess } from "../hooks/useStageAccess";
+
 function shuffle(arr) {
   const a = [...arr];
+
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
+
   return a;
 }
 
@@ -18,18 +24,26 @@ const difficultyMeta = {
   3: { label: "Hard", color: "#ef4444", maxHp: 7 },
 };
 
-function adjustDifficulty(current, hits, totalAttempts) {
-  const accuracy = hits / totalAttempts;
-  if (accuracy >= 0.8) return Math.min(current + 1, 3);
-  if (accuracy < 0.5) return Math.max(current - 1, 1);
-  return current;
-}
-
 export default function ModuleTwoLessonTwoQuiz() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const difficulty = location.state?.difficulty ?? 1;
+  // For logged-in user data
+  const userId = localStorage.getItem("userId");
+
+  // Access restriction w/ hook
+  const { accessChecked, allowed } = useStageAccess(
+    userId,
+    "module_2",
+    "encounter_2",
+    "/module_two"
+  );
+
+  const difficulty =
+    location.state?.difficulty ??
+    Number(localStorage.getItem("difficulty")) ??
+    1;
+
   const meta = difficultyMeta[difficulty];
 
   const [questions, setQuestions] = useState([]);
@@ -44,24 +58,27 @@ export default function ModuleTwoLessonTwoQuiz() {
 
   const [battleLog, setBattleLog] = useState("A wild Slime appears!");
   const [slimeAnim, setSlimeAnim] = useState("");
-
   const [won, setWon] = useState(false);
 
   const question = queue[qIndex];
 
   // =========================
-  // LOAD MODULE 2 LESSON 2
+  // LOAD MODULE 2 LESSON 2 QUIZ
   // =========================
   useEffect(() => {
-    async function loadLesson() {
+    // No loading if accessed not allowed
+    if (!allowed) return;
+
+    async function loadQuiz() {
       try {
         const res = await fetch("/api/quizzes/module_2/2");
 
         if (!res.ok) {
-          throw new Error("Failed to fetch lesson");
+          throw new Error("Failed to fetch quiz");
         }
 
         const data = await res.json();
+
         const diffKey = String(difficulty);
 
         const rawQuestions =
@@ -73,23 +90,38 @@ export default function ModuleTwoLessonTwoQuiz() {
         setQueue(shuffle(rawQuestions));
         setQIndex(0);
       } catch (err) {
-        console.error("Lesson load failed:", err);
+        console.error("Quiz load failed:", err);
       } finally {
         setLoading(false);
       }
     }
 
-    loadLesson();
-  }, [difficulty]);
+    loadQuiz();
+  }, [allowed, difficulty]);
 
   // =========================
-  // LOADING
+  // ACCESS / LOADING
   // =========================
+
+  if (!accessChecked) {
+    return (
+      <div className="quiz-bg">
+        <div className="battle-log">
+          <p>Loading battle...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!allowed) {
+    return null;
+  }
+
   if (loading || queue.length === 0 || !question) {
     return (
       <div className="quiz-bg">
         <div className="battle-log">
-          <p>Loading lesson...</p>
+          <p>Loading battle...</p>
         </div>
       </div>
     );
@@ -155,12 +187,26 @@ export default function ModuleTwoLessonTwoQuiz() {
           <img src={slimeImg} alt="Defeated Slime" className="victory-slime" />
           <h2 className="victory-title">Victory!</h2>
           <p className="victory-msg">
-            You defeated the Slime and mastered Informal Fallacies!
+            You defeated the Slime and completed Encounter 2!
           </p>
           <div className="victory-actions">
             <button
               className="results-btn done"
-              onClick={() => navigate("/module_two")}
+              onClick={async () => {
+                try {
+                  await markStageComplete(
+                    userId,
+                    "module_2",
+                    "encounter_2",
+                    "ENCOUNTER"
+                  );
+
+                  navigate("/module_two");
+                } catch (err) {
+                  console.error("Failed to save encounter progress:", err);
+                  alert("Could not save progress. Please try again.");
+                }
+              }}
             >
               Back to Lessons
             </button>
@@ -176,7 +222,6 @@ export default function ModuleTwoLessonTwoQuiz() {
   return (
     <div className="quiz-bg">
       <div className="battle-arena">
-
         <div className="enemy-section">
           <div className="enemy-info">
             <span className="enemy-name">Slime</span>
@@ -252,7 +297,6 @@ export default function ModuleTwoLessonTwoQuiz() {
             )}
           </div>
         </div>
-
       </div>
     </div>
   );

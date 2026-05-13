@@ -2,9 +2,24 @@ import "./LessonOne.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+// For progression API helper
+import { markStageComplete } from "../services/ProgressService";
+import { useStageAccess } from "../hooks/useStageAccess";
+
 export default function ModuleTwoLessonOne() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // For logged-in user data
+  const userId = localStorage.getItem("userId");
+
+  // Access restriction w/ hook (ensures user can't just type URL to bypass)
+  const { accessChecked, allowed } = useStageAccess(
+    userId,
+    "module_2",
+    "lesson_1",
+    "/map"
+  );
 
   const difficulty =
     location.state?.difficulty ??
@@ -21,6 +36,9 @@ export default function ModuleTwoLessonOne() {
   // LOAD LESSON FROM BACKEND
   // =========================
   useEffect(() => {
+    // No loading if accessed not allowed
+    if (!allowed) return;
+
     async function loadLesson() {
       try {
         const res = await fetch("/api/lessons/module_2/1");
@@ -41,11 +59,19 @@ export default function ModuleTwoLessonOne() {
     }
 
     loadLesson();
-  }, []);
+  }, [allowed]);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (isLast) {
-      navigate("/module_two/quiz", { state: { difficulty } });
+      try {
+        await markStageComplete(userId, "module_2", "lesson_1", "LESSON");
+        navigate("/module_two/quiz", { state: { difficulty } });
+      } catch (err) {
+        console.error("Failed to save lesson progress:", err);
+        alert("Could not save progress. Please try again.");
+      }
+
+      // navigate("/module_one/quiz", { state: { difficulty } });
     } else {
       setIndex((i) => i + 1);
     }
@@ -66,7 +92,6 @@ export default function ModuleTwoLessonOne() {
   return (
     <div className="lesson-one-bg">
       <div className="lesson-one-panel">
-
         {/* progress dots */}
         <div className="slide-progress">
           {slides.map((_, i) => (
@@ -103,7 +128,6 @@ export default function ModuleTwoLessonOne() {
             {isLast ? "Battle!" : "Continue"}
           </button>
         </div>
-
       </div>
     </div>
   );

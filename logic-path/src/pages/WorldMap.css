@@ -69,3 +69,63 @@
 .close-btn:hover {
   background: #f0f0f0;
 }
+
+/* Locked styling */
+.node.locked {
+  background: gray;
+  opacity: 0.6;
+}
+
+.start-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.start-btn:disabled:hover {
+  background: gray;
+}
+
+.locked-message {
+  color: #b00020;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+/* Unlocked message */
+.unlock-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  min-width: 280px;
+}
+
+.unlock-popup h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.unlock-popup p {
+  margin-bottom: 16px;
+}
+
+.unlock-popup button {
+  padding: 10px 16px;
+  background: #2575fc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.unlock-popup button:hover {
+  background: #1e63d6;
+}

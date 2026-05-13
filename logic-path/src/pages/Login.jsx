@@ -15,7 +15,11 @@ const handleLogin = async () => {
 
   try {
     const res = await login({ email, password });
+    console.log("LOGIN RESPONSE:", res.data);
+
     localStorage.setItem("token", res.data.token);
+    localStorage.setItem("userId", res.data.id);
+
     navigate("/map");
   } catch (err) {
     console.error("Login failed", err);
