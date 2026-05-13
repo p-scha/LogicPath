@@ -3,12 +3,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import slimeImg from "../assets/M1L1_Slime.webp";
 
+// For progression API helper
+import { markStageComplete } from "../services/ProgressService";
+import { useStageAccess } from "../hooks/useStageAccess";
+
 function shuffle(arr) {
   const a = [...arr];
+
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
+
   return a;
 }
 
@@ -21,6 +27,17 @@ const difficultyMeta = {
 export default function ModuleTwoLessonOneQuiz() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // For logged-in user data
+  const userId = localStorage.getItem("userId");
+
+  // Access restriction w/ hook
+  const { accessChecked, allowed } = useStageAccess(
+    userId,
+    "module_2",
+    "encounter_1",
+    "/module_two"
+  );
 
   const difficulty = location.state?.difficulty ?? 1;
   const meta = difficultyMeta[difficulty];
@@ -45,6 +62,9 @@ export default function ModuleTwoLessonOneQuiz() {
   // LOAD MODULE 2 LESSON 1
   // =========================
   useEffect(() => {
+    // No loading if accessed not allowed
+    if (!allowed) return;
+
     async function loadLesson() {
       try {
         const res = await fetch("/api/quizzes/module_2/1");
@@ -73,7 +93,7 @@ export default function ModuleTwoLessonOneQuiz() {
     }
 
     loadLesson();
-  }, [difficulty]);
+  }, [allowed, difficulty]);
 
   // =========================
   // LOADING
@@ -153,7 +173,23 @@ export default function ModuleTwoLessonOneQuiz() {
           <div className="victory-actions">
             <button
               className="results-btn done"
-              onClick={() => navigate("/module_two")}
+              onClick={async () => {
+                try {
+                  await markStageComplete(
+                    userId,
+                    "module_2",
+                    "encounter_1",
+                    "ENCOUNTER"
+                  );
+
+                  navigate("/module_two");
+                } catch (err) {
+                  console.error("Failed to save encounter progress:", err);
+                  alert("Could not save progress. Please try again.");
+                }
+
+                //navigate("/module_one");
+              }}
             >
               Back to Lessons
             </button>
@@ -169,7 +205,6 @@ export default function ModuleTwoLessonOneQuiz() {
   return (
     <div className="quiz-bg">
       <div className="battle-arena">
-
         <div className="enemy-section">
           <div className="enemy-info">
             <span className="enemy-name">Slime</span>
@@ -245,7 +280,6 @@ export default function ModuleTwoLessonOneQuiz() {
             )}
           </div>
         </div>
-
       </div>
     </div>
   );

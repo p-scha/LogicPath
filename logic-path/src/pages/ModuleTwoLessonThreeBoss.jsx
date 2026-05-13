@@ -4,12 +4,18 @@ import { useState, useEffect } from "react";
 import dragonImg from "../assets/M1L3_ForestDragon.webp";
 import emergencyGif from "../assets/Emergency.gif";
 
+// For progression API helper
+import { markStageComplete } from "../services/ProgressService";
+import { useStageAccess } from "../hooks/useStageAccess";
+
 function shuffle(arr) {
   const a = [...arr];
+
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
+
   return a;
 }
 
@@ -19,9 +25,20 @@ const difficultyMeta = {
   3: { label: "Hard", color: "#ef4444", bossHp: 9, playerHp: 3 },
 };
 
-export default function ModuleThreeLessonThreeBoss() {
+export default function ModuleTwoLessonThreeBoss() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // For logged-in user data
+  const userId = localStorage.getItem("userId");
+
+  // Access restriction w/ hook
+  const { accessChecked, allowed } = useStageAccess(
+    userId,
+    "module_2",
+    "boss_1",
+    "/module_two"
+  );
 
   const difficulty =
     location.state?.difficulty ??
@@ -58,9 +75,12 @@ export default function ModuleThreeLessonThreeBoss() {
   }, []);
 
   // =========================
-  // LOAD MODULE 3 LESSON 3
+  // LOAD MODULE 2 BOSS QUIZ
   // =========================
   useEffect(() => {
+    // No loading if accessed not allowed
+    if (!allowed) return;
+
     async function loadLesson() {
       try {
         const res = await fetch("/api/quizzes/module_2/3");
@@ -89,16 +109,30 @@ export default function ModuleThreeLessonThreeBoss() {
     }
 
     loadLesson();
-  }, [difficulty]);
+  }, [allowed, difficulty]);
 
   // =========================
-  // LOADING
+  // ACCESS / LOADING
   // =========================
+  if (!accessChecked) {
+    return (
+      <div className="boss-bg">
+        <div className="battle-log">
+          <p>Loading boss...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!allowed) {
+    return null;
+  }
+
   if (loading || queue.length === 0 || !question) {
     return (
       <div className="boss-bg">
         <div className="battle-log">
-          <p>Loading lesson...</p>
+          <p>Loading boss...</p>
         </div>
       </div>
     );
@@ -176,7 +210,7 @@ export default function ModuleThreeLessonThreeBoss() {
     setPhase("battle");
   };
 
-// =========================
+  // =========================
   // VICTORY
   // =========================
   if (phase === "victory") {
@@ -188,12 +222,31 @@ export default function ModuleThreeLessonThreeBoss() {
             alt="Defeated Dragon"
             className="result-dragon dead-dragon"
           />
+
           <h2 className="result-title victory">Victory!</h2>
+
           <p className="result-msg">
-            You defeated the Forest Dragon and completed Lesson 3!
+            You defeated the Forest Dragon and completed Module 2!
           </p>
-          <button className="result-btn done" onClick={() => navigate("/module_two")}>
-            Back to Lessons
+
+          <button
+            className="result-btn done"
+            onClick={async () => {
+              try {
+                await markStageComplete(userId, "module_2", "boss_1", "BOSS");
+
+                navigate("/map", {
+                  state: {
+                    unlockedMessage: "Module 3 has been unlocked!",
+                  },
+                });
+              } catch (err) {
+                console.error("Failed to save boss progress:", err);
+                alert("Could not save progress. Please try again.");
+              }
+            }}
+          >
+            Back to Map
           </button>
         </div>
       </div>
@@ -208,15 +261,23 @@ export default function ModuleThreeLessonThreeBoss() {
       <div className="boss-bg">
         <div className="boss-result-panel">
           <img src={dragonImg} alt="Forest Dragon" className="result-dragon" />
+
           <h2 className="result-title defeat">Defeated!</h2>
+
           <p className="result-msg">
-            The Forest Dragon was too powerful. Study the material and try again!
+            The Forest Dragon was too powerful. Study the material and try
+            again!
           </p>
+
           <div className="result-actions">
             <button className="result-btn retry" onClick={handleRetry}>
               Try Again
             </button>
-            <button className="result-btn back" onClick={() => navigate("/module_two")}>
+
+            <button
+              className="result-btn back"
+              onClick={() => navigate("/module_two")}
+            >
               Back to Lessons
             </button>
           </div>
@@ -224,7 +285,6 @@ export default function ModuleThreeLessonThreeBoss() {
       </div>
     );
   }
-
 
   // =========================
   // MAIN
@@ -238,7 +298,6 @@ export default function ModuleThreeLessonThreeBoss() {
       )}
 
       <div className="boss-arena">
-
         <div className="boss-badge">
           <span>Boss Battle</span>
           <span className="boss-diff-tag" style={{ color: meta.color }}>
@@ -337,7 +396,6 @@ export default function ModuleThreeLessonThreeBoss() {
             )}
           </div>
         </div>
-
       </div>
     </div>
   );
